@@ -1,0 +1,59 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.ort/extras/spring-security"
+  th:with="title=トップページ">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/index.css}" />
+<!--/* <script type="text/javascript" th:src="@{/js/datepicker.js}"></script> */-->
+</head>
+<body class="sidebar-mini accent-primary">
+  <div class="wrapper">
+    <!--/* ヘッダー領域
+    ============================== */-->
+    <th:block th:replace="parts/main_header.html::content"></th:block>
+    <!--/* サイドバー領域
+    ============================== */-->
+    <th:block th:replace="parts/main_sidebar.html::content"></th:block>
+    <!--/* コンテンツ領域
+    ============================== */-->
+    <div class="content-wrapper">
+      <!--/* コンテンツヘッダー TODO: partsに分ける
+      ============================== */-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark" th:text="${title}">ページタイトル位置</h1>
+              <span sec:authentication="principal.username">テストユーザ名</span>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Endpoint</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/* コンテンツボディ
+      ============================== */-->
+      <section class="content">
+        <div>FACEBOOK DISCONNECTED SUCCESSFUL!!</div>
+        <div>
+          フェイスブックアカウントとの連携解除が完了しました。
+        </div>
+      </section>
+    </div>
+    <!--/* フッター領域
+    ============================== */-->
+    <th:block th:replace="parts/main_footer.html::content"></th:block>
+    <!--/* コントロールサイドバー領域
+    ============================== */-->
+    <th:block th:replace="parts/control_sidebar.html::content"></th:block>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/index.js}"></script>
+</body>
+</html>

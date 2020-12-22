@@ -1,0 +1,76 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=ユーザー情報確認">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body class="register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <th:block th:include="parts/common::logo_box"></th:block>
+    </div>
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">ユーザー情報確認</p>
+        <p class="">ご登録済みのメールアドレスにパスワード更新用のURLを送ります。</p>
+        <form class="mb-2" th:action="@{/user/forgotpassword/input}"
+          th:object="${forgotpasswordFormRequest}" method="post">
+          <ul th:if="${#fields.hasErrors('correlationError')}">
+            <li class="text-danger common-input-error-text"
+              th:each="err : ${#fields.errors('correlationError')}"
+              th:text="${err}"></li>
+          </ul>
+          <!-- UserId -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="text" name="userId" class="form-control"
+                th:field="*{userId}" placeholder="UserId" maxlength="10">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user-circle"></span>
+                </div>
+              </div>
+            </div>
+            <ul th:if="${#fields.hasErrors('userId')}">
+              <li class="text-danger common-input-error-text"
+                th:each="err : ${#fields.errors('userId')}"
+                th:text="${err}"></li>
+            </ul>
+          </div>
+          <!-- Email -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="email" name="email" class="form-control"
+                th:field="*{email}" placeholder="email" maxlength="60">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <ul th:if="${#fields.hasErrors('email')}">
+              <li class="text-danger common-input-error-text"
+                th:each="err : ${#fields.errors('email')}"
+                th:text="${err}"></li>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <a class="btn btn-default w-100" th:href="@{/login}">トップへ戻る</a>
+            </div>
+            <div class="col-4">
+              <button type="submit" onclick="login.submit();"
+                class="btn btn-primary btn-block">
+                <i class="fas fa-paper-plane mr-2"></i>送信
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/input_userinfo.js}"></script>
+</body>
+</html>

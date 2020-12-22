@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=エラーページ">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body class="hold-transition layout-top-nav">
+  <div class="wrapper">
+
+    <!--/* ヘッダー領域
+    ============================== */-->
+    <th:block th:replace="parts/main_header.html::content_simple"></th:block>
+
+    <!--/* コンテンツ領域
+    ============================== */-->
+    <div class="content-wrapper">
+      <!--/* コンテンツヘッダー
+      ============================== */-->
+      <div class="content-header">
+        <div class="container">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">
+                ページが見つかりませんでした <small></small>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--/* コンテンツボディ
+      ============================== */-->
+      <section class="content">
+        <div class="error-page">
+          <h2 class="headline text-warning">
+            <i class="fas fa-exclamation-triangle text-warn"></i>
+          </h2>
+          <div class="error-content">
+            <h3 class="mb-2">お探しのページが見つかりませんでした。</h3>
+            <p>
+              ホームに戻って再度ご確認ください。
+            </p>
+            <a th:href="@{/menu}">
+              <button class="btn btn-default btn-block">ホームへ戻る</button>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!--/* コントロールサイドバー領域
+    ============================== */-->
+    <th:block th:replace="parts/control_sidebar.html::content"></th:block>
+
+    <!--/* フッター領域
+    ============================== */-->
+    <th:block th:replace="parts/main_footer.html::content"></th:block>
+
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/error/404.js}"></script>
+</body>
+
+</html>

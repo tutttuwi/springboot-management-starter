@@ -1,0 +1,21 @@
+# Development
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=dev
+    username: postgres
+    password:
+#    schema: public
+    driverClassName: org.postgresql.Driver
+doma:
+  dialect: postgres
+  sql-file-repository: NO_CACHE # キャッシュの無効化は、開発用設定
+
+# LogLevelをDEBUGにするとかなりエラーログが出力されるのでコメントアウト
+logging:
+  level:
+    root: INFO
+#    com: debug
+#    org: debug
+#    org.springframework: DEBUG
+    

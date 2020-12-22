@@ -1,0 +1,6 @@
+[# th:text="${fstName}"/] [# th:text="${lstName}"/] 様
+
+ご登録ありがとうございます。
+以下のURLをクリックして、アカウントを有効化してください。
+
+[# th:text="${auth_url}" /]

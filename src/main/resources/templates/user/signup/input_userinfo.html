@@ -1,0 +1,148 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=会員情報入力">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body class="register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <th:block th:include="parts/common::logo_box"></th:block>
+    </div>
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">会員情報入力</p>
+        <form class="mb-4" th:action="@{/user/signup/input}"
+          th:object="${signUpUserFormRequest}" method="post">
+          <!-- FstName -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="text" name="fstName" class="form-control"
+                placeholder="名(FirstName)" th:field="*{fstName}"
+                maxlength="15">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <i class="fas fa-signature"></i>
+                </div>
+              </div>
+            </div>
+            <span class="text-danger"
+              th:if="${#fields.hasErrors('fstName')}"
+              th:errors="*{fstName}"></span>
+          </div>
+          <!-- LstName -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="text" name="lstName" class="form-control"
+                placeholder="姓(LastName)" th:field="*{lstName}"
+                maxlength="15">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <i class="fas fa-signature"></i>
+                </div>
+              </div>
+            </div>
+            <span class="text-danger"
+              th:if="${#fields.hasErrors('lstName')}"
+              th:errors="*{lstName}"></span>
+          </div>
+          <!-- UserId -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="text" name="userId" class="form-control"
+                placeholder="UserId" th:field="*{userId}" maxlength="10">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user-circle"></span>
+                </div>
+              </div>
+            </div>
+            <span class="text-danger"
+              th:if="${#fields.hasErrors('userId')}"
+              th:errors="*{userId}"></span>
+          </div>
+          <!-- Email -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="email" name="email" class="form-control"
+                placeholder="email" th:field="*{email}" maxlength="60">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <span class="text-danger"
+              th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+          </div>
+          <!-- Password -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="password" name="password"
+                class="form-control" placeholder="Password"
+                th:field="*{password}" maxlength="30">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <span class="text-danger"
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"></span>
+          </div>
+          <!-- Retype Password -->
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <input type="password" name="retypePassword"
+                class="form-control" placeholder="Retype Password"
+                th:field="*{retypePassword}" maxlength="30">
+              <div class="input-group-append">
+                <div class="input-group-text text-warning">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <span class="text-danger"
+              th:if="${#fields.hasErrors('retypePassword')}"
+              th:errors="*{retypePassword}"></span>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" id="terms" class="js-terms"
+                  th:field="*{isAgreeTerms}"> <label for="terms">
+                  <a th:href="@{/terms}">利用規約</a>に同意する
+                </label>
+              </div>
+            </div>
+            <div class="col-4">
+              <button type="submit"
+                class="btn btn-primary btn-block js-submit disabled"
+                disabled>確認</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- ソーシャル連携登録 -->
+        <!--
+        <div class="social-auth-links text-center mb-3">
+          <a href="#" class="btn btn-block btn-primary"> <i
+            class="fab fa-facebook mr-2"></i> FACEBOOKで登録
+          </a> <a href="#" class="btn btn-block btn-danger"> <i
+            class="fab fa-google-plus mr-2"></i> Google+で登録
+          </a>
+        </div>
+        -->
+
+        <p class="mb-1">
+          <a th:href="@{/login}">すでに会員の方はこちら</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/user/signup/input_userinfo.js}"></script>
+</body>
+</html>

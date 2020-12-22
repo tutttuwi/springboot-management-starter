@@ -1,0 +1,131 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=トップページ">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body class="login-page">
+  <canvas class="bg-login"></canvas>
+
+  <!-- LEFT YOUR CONTENT -->
+  <!--   <div
+    class="login-page-left flex-fill w-50 h-100 d-none d-md-block bg-app-image">
+    LEFT CONTENT</div>
+  -->
+  <div
+    class="login-page-right flex-fill d-flex align-items-center justify-content-center w-100 h-100">
+    <div class="login-box">
+      <div class="login-logo">
+        <th:block th:include="parts/common::logo_box"></th:block>
+      </div>
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">ログイン</p>
+          <div th:if="${param.error}" class="my-2 text-danger">ユーザーIDまたはパスワードが違います。</div>
+          <div th:if="${param.timeout}" class="my-2 text-warning">一定時間操作されなかったためタイムアウトしました。</div>
+
+          <form name="loginForm" th:object="${loginFormRequest}"
+            th:action="@{/login}" method="post">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" name="id" class="form-control js-id"
+                  th:classappend="${param.error} ? 'is-invalid'"
+                  th:field="*{id}" placeholder="ユーザID">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user-circle"></span>
+                  </div>
+                </div>
+              </div>
+              <ul th:if="${#fields.hasErrors('id')}">
+                <li class="text-danger common-input-error-text"
+                  th:each="err : ${#fields.errors('id')}"
+                  th:text="${err}"></li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <input type="password" name="password"
+                  class="form-control js-password"
+                  th:classappend="${param.error} ? 'is-invalid'"
+                  th:field="*{password}" placeholder="パスワード">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <ul th:if="${#fields.hasErrors('password')}">
+                <li class="text-danger common-input-error-text"
+                  th:each="err : ${#fields.errors('password')}"
+                  th:text="${err}"></li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-7">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="remember"
+                    class="js-remember"> <label for="remember">
+                    IDを記憶する </label>
+                </div>
+              </div>
+              <div class="col-5">
+                <!-- Recaptcha HERE -->
+                <!--
+                <button type="submit"
+                  class="btn btn-primary btn-block g-recaptcha"
+                  data-sitekey="type-your-site-key-here"
+                  data-callback='onSubmit' data-action='submit'>ログイン</button>
+                -->
+                <button type="submit" class="btn btn-primary btn-block" onClick="doLogin()">ログイン</button>
+              </div>
+            </div>
+            <input type="hidden" name="sitekey"
+              class="js-recaptcha-sitekey">
+          </form>
+
+          <!-- ソーシャルログインボタン -->
+          <!--           <div class="social-auth-links text-center mb-3">
+            <a th:href="@{/auth/facebook}"
+              class="btn btn-block btn-primary"> <i
+              class="fab fa-facebook mr-2"></i> Facebookでログインする
+            </a> <a th:href="@{/auth/google}"
+              class="btn btn-block btn-danger"> <i
+              class="fab fa-google-plus mr-2"></i> Google+でログインする
+            </a>
+          </div>
+          -->
+
+          <p class="mb-3">
+            <a th:href="@{/user/forgotpassword}">パスワードを忘れた方はこちら</a>
+          </p>
+          <div class="mb-2">
+            <div class="text-center w-100">アカウントをお持ちでない方はこちら</div>
+            <a th:href="@{/user/signup}"
+              class="btn bg-lightblue text-center w-100">新規会員登録</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/login.js}"></script>
+  <script th:src="@{/js/particles-settings.js}"></script>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+      /* Recaptcha HERE */
+      /*
+      function onSubmit(token) {
+       login.submit();
+       document.querySelector(".js-recaptcha-sitekey").value = token;
+       document.querySelector("[name='loginForm']").submit();
+       }
+       */
+       $("[name=loginForm]").submit(function(){
+         login.submit();
+         return true;
+       });
+    </script>
+</body>
+</html>

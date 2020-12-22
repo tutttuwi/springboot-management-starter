@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=メールアドレス認証完了">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/complete_userinfo.css}" />
+</head>
+<body class="register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <th:block th:include="parts/common::logo_box"></th:block>
+    </div>
+    <div class="card">
+      <div class="card-body register-card-body">
+        <div class="card-header">
+          <p class="d-flex align-items-center justify-content-center">
+            <span class="fa-stack"> <i
+              class="fas fa-envelope-square fa-2x fa-stack-1x"
+              aria-hidden="true"></i> <i
+              class="fas fa-check text-success fa-stack-2x"
+              aria-hidden="true"></i>
+
+            </span>メールアドレス認証完了
+          </p>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            メールアドレスの認証が完了しました。<br> トップページよりログインしてください。
+          </div>
+          <div>
+            <a class="btn btn-primary w-100" th:href="@{/login}">トップへ戻る</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/user/signup/complete_userinfo.js}"></script>
+</body>
+</html>

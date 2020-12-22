@@ -1,0 +1,115 @@
+# refer to the Common Application properties
+# <https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties>
+spring:
+  profiles:
+    active: dev
+  application:
+    name: SpringBoot-Admin-Management
+  resources:
+#    add-mappings: false
+#    cache-period: 86400 # 1日間キャッシュさせる
+    chain:
+      strategy:
+        content:
+          enabled: true # 静的コンテンツのキャッシュ無効設定 MD5ハッシュが計算される バージョン管理戦略と呼ばれるらしい
+          paths: /**
+  # TODO: メッセージ定義をConfigクラスかプロパティかどちからにする
+  messages:
+    basename: i18n/messages
+#    cache-duration: -1
+#    encoding: UTF-8
+  devtools:
+    restart:
+      #exclude: "**/*.yml, **/*.xml" # 再起動のトリガーから除外するファイルを設定（上書）
+      additional-exclude: "**/*.yml, **/*.xml" # 再起動のトリガーから除外するファイルを追加で設定
+    #livereload.enabled: false # LiveReloadを有効にする（デフォルトでTRUEなので必要あればFalseを設定）
+  # GMailの場合のサンプル設定（ユーザ名/パスワード要設定）
+  mail:
+    host: smtp.gmail.com
+    port: 587
+#    username: 
+#    password: 
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+  mvc.hiddenmethod.filter.enabled: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  servlet:
+    multipart:
+      max-file-size: -1 # デフォルトは1MB　-1だと無制限
+      max-request-size: 20MB # デフォルトは10MB
+  # マイグレーション設定
+  flyway:
+    enabled: true
+    baseline-on-migrate: true # すでに存在するデータベースでもマイグレーションを有効にする
+    
+    # SpringBootActuator設定
+# REDIS管理設定
+#  session:
+#    store-type: redis
+# ソーシャル連携設定
+#  social:
+#    facebook:
+#      app-id: ${facebook.app-id}
+#      app-secret: ${facebook.app-secret}
+#    twitter:
+#      app-id: ${twitter.app-id}
+#      app-secret: ${twitter.app-secret}
+
+#logging:
+#   config: classpath:logback
+
+management:
+  # ActuatorのLISTENポートを変更し、一般利用者には公開しない
+  server:
+    port: 18081
+    # localhostからのリクエストのみ有効とする
+    address: 127.0.0.1
+  endpoints:
+    web:
+      exposure:
+        include: "*" # すべて有効
+    #enabled-by-default: false # すべてを無効
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /springboot-admin-management
+#  error:
+#    path: "/error"
+  
+
+# プロジェクト個別設定
+settings:
+  password:
+    secret: your-app-secret
+    iterations: 100
+    hashWidth: 256
+  forgotpassword:
+    email.url: http://localhost:8080/springboot-admin-management/user/forgotpassword/inputpassword
+    email.validhour: 72
+    email.cancelurl: http://localhost:8080/springboot-admin-management/user/forgotpassword/cancelpassword
+  auth:
+    email.url: http://localhost:8080/springboot-admin-management/user/signup/emailauth
+    email.validhour: 72
+  db:
+    numbering.key.accountid: ACCOUNT_ID
+
+logging:
+  pattern:
+    # MDCで設定した値を出力する TODO: 設定調整
+    level: "[%X{FUNCTION_NAME}:%X{X-Track-Id}:%X{LOGIN_USER_ID}] %5p"
+
+#security:
+#  user: 
+#    name: user
+#    password: demo
+#    role: USER,ADMIN
+#  basic:
+#    enabled: true

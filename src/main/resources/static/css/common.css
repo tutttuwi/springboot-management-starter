@@ -1,0 +1,17 @@
+@import url("parts/color.css");
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li.common-input-error-text:before {
+  font-family: "Font Awesome 5 Free";
+  content: '\f06a';
+  font-weight: 900;
+  margin-right: 3px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

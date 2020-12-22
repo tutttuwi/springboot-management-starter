@@ -1,0 +1,329 @@
+plugins {
+	id 'java'
+    id 'com.diffplug.eclipse.apt' version '3.22.0'
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'org.seasar.doma.compile' version '1.0.0'
+    id "net.researchgate.release" version '2.8.1'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'eclipse'
+}
+
+def domaVersion = project.property('release.releaseVersion')
+
+def domaResources = ['doma.compile.config', 'META-INF/**/*.sql', 'META-INF/**/*.script']
+
+task syncDomaResourcesJava(type: Sync) {
+    from sourceSets.main.resources.srcDirs
+    println sourceSets.main.resources.srcDirs
+    println compileJava.destinationDir
+    include domaResources
+    into compileJava.destinationDir
+}
+
+// テンポラリディレクトリのパスを定義する
+ext.domaResourcesDir = "${buildDir}/tmp/doma-resources"
+// domaが注釈処理で参照するリソースをテンポラリディレクトリに抽出
+task extractDomaResources(type: Copy, dependsOn: processResources)  {
+    from processResources.destinationDir
+    println 'processResources.destinationDir:' + processResources.destinationDir
+    include 'doma.compile.config'
+    include 'META-INF/**/*.sql'
+    include 'META-INF/**/*.script'
+    into domaResourcesDir
+}
+// テンポラリディレクトリ内のリソースをcompileJavaタスクの出力先ディレクトリにコピーする
+task copyDomaResources(type: Copy, dependsOn: extractDomaResources)  {
+    from domaResourcesDir
+    println domaResourcesDir
+    into compileJava.destinationDir
+}
+
+compileJava {
+  // 上述のタスクに依存させる
+  dependsOn copyDomaResources
+
+  println '----- compileJava :START'
+  println 'sourceSets.main.java.srcDirs :' + sourceSets.main.java.srcDirs
+  println 'classpath :' + classpath
+  println 'destinationDir :' + destinationDir
+  println '----- compileJava :END'
+
+  aptOptions {
+    processorArgs = [
+      //'doma.dao.subpackage' : 'impl',
+      'doma.dao.suffix' : 'Impl'
+    ]
+  }
+  options.encoding = 'UTF-8'
+  dependsOn syncDomaResourcesJava
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+//[compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.encoding = "UTF-8"
+//[compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.compilerArgs = ["-Xlint:all"]
+
+// // JavaクラスとSQLファイルの出力先ディレクトリを同じにする
+//processResources.destinationDir = compileJava.destinationDir
+// // コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
+compileJava.dependsOn processResources
+// def aptGeneratePath = 'build/apt_generated'
+// compileJava.options.compilerArgs = ['-s', aptGeneratePath]
+// new File(aptGeneratePath).mkdirs()
+
+group = 'me.tutttuwi'
+version = '0.0.1-SNAPSHOT'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+//[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+// JavaクラスとSQLファイルの出力先ディレクトリを同じにする
+//processResources.destinationDir = compileJava.destinationDir
+// コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
+//compileJava.dependsOn processResources
+
+//def aptGeneratePath = 'build/apt_generated'
+//compileJava.options.compilerArgs = ['-s', aptGeneratePath, '-Adao.subpackage=impl', '-Adao.suffix=Impl']
+//new File(aptGeneratePath).mkdirs()
+
+//repositories {
+//	mavenCentral()
+//	maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+//}
+
+
+
+
+
+// // テンポラリディレクトリのパスを定義する
+// ext.domaResourcesDir = "${buildDir}/tmp/doma-resources"
+//
+// // domaが注釈処理で参照するリソースをテンポラリディレクトリに抽出
+// task extractDomaResources(type: Copy, dependsOn: processResources)  {
+//     from processResources.destinationDir
+//     include 'doma.compile.config'
+//     include 'META-INF/**/*.sql'
+//     include 'META-INF/**/*.script'
+//     into domaResourcesDir
+// }
+//
+// // テンポラリディレクトリ内のリソースをcompileJavaタスクの出力先ディレクトリにコピーする
+// task copyDomaResources(type: Copy, dependsOn: extractDomaResources)  {
+// 	from domaResourcesDir
+// 	println 'SQLファイルのコピー元'
+// 	println domaResourcesDir
+// 	into compileJava.destinationDir
+// 	println 'SQLファイルのコピー先'
+// 	println compileJava.destinationDir
+// }
+// compileJava {
+// 	aptOptions {
+// 		processorArgs = [
+// 			'doma.dao.subpackage' : 'impl', 'doma.dao.suffix' : 'Impl'
+// 		]
+// 	}
+// 	// 上述のタスクに依存させる
+// 	dependsOn copyDomaResources
+// 	// テンポラリディレクトリをcompileJavaタスクの入力ディレクトリに設定する
+// 	inputs.dir domaResourcesDir
+// 	options.encoding = 'UTF-8'
+// }
+// compileTestJava {
+//     options.encoding = 'UTF-8'
+//     // テストの実行時は注釈処理を無効にする
+//     options.compilerArgs = ['-proc:none']
+// }
+
+// JavaクラスとSQLファイルの出力先ディレクトリを同じにする
+// processResources.destinationDir = compileJava.destinationDir
+// コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
+// compileJava.dependsOn processResources
+
+eclipse {
+    classpath {
+        file {
+            whenMerged { classpath ->
+            	classpath.entries.findAll { entry ->
+           			// println 'entry :' + entry.path + " : " + entry.toString()
+            		if(entry.path == 'bin/default'){
+            			entry.path = 'bin/main'
+            		}
+            	}
+//                classpath.entries.removeAll { it.path == '.apt_generated' }
+            }
+            withXml { provider ->
+                def node = provider.asNode()
+                // specify output path for .apt_generated
+                //node.appendNode( 'classpathentry', [ kind: 'src', output: 'bin/main', path: '.apt_generated'])
+            }
+        }
+    }
+//    jdt {
+//        javaRuntimeName = 'JavaSE-8'
+//    }
+
+}
+
+repositories {
+	mavenLocal()
+	maven { url 'https://maven.springframework.org/release' }
+	maven { url 'https://maven.springframework.org/milestone' }
+	maven { url 'https://maven.springframework.org/snapshot' }
+	maven { url 'https://download.java.net/maven/2' }
+	maven { url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/" }
+	mavenCentral()
+
+//    mavenCentral()
+    //maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+//    maven {url 'https://repo.spring.io/libs-snapshot'}
+    //maven {url 'https://repo.spring.io/libs-milestone'}
+    // https://repo.spring.io/libs-snapshot
+}
+
+dependencies {
+	// SpringBootとセットのものを使用する
+	//compile "org.seasar.doma:doma:2.4.1"
+	// https://mvnrepository.com/artifact/org.seasar.doma.boot/doma-spring-boot-starter
+	// compile group: 'org.seasar.doma.boot', name: 'doma-spring-boot-starter', version: '1.3.0'
+	compile group: 'org.seasar.doma.boot', name: 'doma-spring-boot-starter', version: '1.1.1'
+	// domaの注釈処理を実行することを示す
+	annotationProcessor "org.seasar.doma:doma:2.19.2"
+	// domaへの依存を示す
+	implementation "org.seasar.doma:doma:2.19.2"
+	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0')
+	// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+	// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-java8time
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
+	// https://mvnrepository.com/artifact/org.passay/passay
+	compile group: 'org.passay', name: 'passay', version: '1.5.0'
+	// https://mvnrepository.com/artifact/com.gitlab.haynes/orika-spring-boot-starter
+	compile group: 'com.gitlab.haynes', name: 'orika-spring-boot-starter', version: '1.20.0'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.6.RELEASE'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-social-facebook
+	// compile group: 'org.springframework.boot', name: 'spring-boot-starter-social-facebook', version: '1.5.22.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.social/spring-social-facebook
+	//compile group: 'org.springframework.social', name: 'spring-social-facebook', version: '2.0.3.RELEASE'
+    //compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
+	//compile group: 'org.springframework.boot', name: 'spring-boot-starter-social-facebook', version: '2.0.0.M4'
+	// https://mvnrepository.com/artifact/org.springframework.social/spring-social-facebook
+	compile group: 'org.springframework.social', name: 'spring-social-facebook', version: '3.0.0.M3'
+
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-social-twitter
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-social-twitter', version: '1.5.22.RELEASE'
+	// https://mvnrepository.com/artifact/com.github.spring-social/spring-social-google
+	compile group: 'com.github.spring-social', name: 'spring-social-google', version: '1.1.3'
+
+	// https://mvnrepository.com/artifact/org.springframework.social/spring-social-security
+	//compile group: 'org.springframework.social', name: 'spring-social-security', version: '1.1.6.RELEASE'
+	//compile group: 'org.springframework.social', name: 'spring-social-security', version: '1.1.4.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.social/spring-social-security
+	//compile group: 'org.springframework.social', name: 'spring-social-security', version: '2.0.0.M1'
+
+
+	// SpringSocial Main ------------------------------------------------------------------------------
+	//    compile 'org.springframework.social:spring-social-core:2.0.0.M4'
+	//	compile group: 'org.springframework.social', name: 'spring-social-config', version: '2.0.0.M4'
+	//	compile group: 'org.springframework.social', name: 'spring-social-security', version: '2.0.0.M4'
+	//	compile "org.springframework.social:spring-social-web:2.0.0.M4"
+    compile group: 'org.springframework.social', name: 'spring-social-core', version: '1.1.6.RELEASE'
+	compile group: 'org.springframework.social', name: 'spring-social-config', version: '1.1.6.RELEASE'
+	compile group: 'org.springframework.social', name: 'spring-social-security', version: '1.1.6.RELEASE'
+	compile group: 'org.springframework.social', name: 'spring-social-web', version: '1.1.6.RELEASE'
+	// ------------------------------------------------------------------------------------------------
+
+
+	// https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
+	compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.12.2'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-csv
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.11.0'
+
+	// https://mvnrepository.com/artifact/org.apache.poi/poi
+	compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+	// https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+	// db.migrationフォルダ直下を準備してから有効化
+	//https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+	compile group: 'org.flywaydb', name: 'flyway-core', version: '6.4.4'
+
+	// Webjars 有効化
+	// https://mvnrepository.com/artifact/org.webjars/webjars-locator-core
+	// https://www.webjars.org/
+	compile group: 'org.webjars', name: 'webjars-locator-core', version: '0.45'
+	compile 'org.webjars:AdminLTE:3.0.5'
+    compile 'org.webjars.npm:particlesjs:2.2.3'
+
+	// デフォルトではシャットダウンを除く全てのエンドポイントが有効になる
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.3.0.RELEASE'
+
+	// implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	// implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	// implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// implementation 'org.springframework.session:spring-session-data-redis'
+	// implementation 'org.springframework.session:spring-session-jdbc'
+	implementation 'org.apache.commons:commons-dbcp2'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test'
+
+}
+
+bootJar {
+  launchScript()
+}
+
+test {
+	useJUnitPlatform()
+}
+
+task gentmp(group: 'GenerateGroup', description: 'for generate template project') doLast {
+	File index = null
+	index = file(new File('file:LICENSE'))
+	println index.class
+	copy {
+		from "LICENSE"
+		into "../"
+	}
+	new File("../newProject").mkdir()
+}
+
+

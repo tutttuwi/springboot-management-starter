@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=会員情報確認">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/confirm_userinfo.css}" />
+</head>
+<body class="register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <th:block th:include="parts/common::logo_box"></th:block>
+    </div>
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">会員情報確認</p>
+        <form th:action="@{/user/signup/confirm}"
+          th:object="${signUpUserFormRequest}" method="post">
+          <!-- FstName -->
+          <div class="form-group">
+            <div class="mb-1">
+              <span
+                class="d-flex align-items-center justify-content-left mx-1 font-weight-bold">名</span>
+              <span class="form-control bg-whitesmoke"
+                th:text="*{fstName}"></span>
+            </div>
+          </div>
+          <!-- LstName -->
+          <div class="form-group">
+            <div class="mb-1">
+              <span
+                class="d-flex align-items-center justify-content-left mx-1 font-weight-bold">姓</span>
+              <span class="form-control bg-whitesmoke"
+                th:text="*{lstName}"></span>
+            </div>
+          </div>
+          <!-- UserId -->
+          <div class="form-group">
+            <div class="mb-1">
+              <span
+                class="d-flex align-items-center justify-content-left mx-1 font-weight-bold">メール</span>
+              <span class="form-control bg-whitesmoke"
+                th:text="*{email}"></span>
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="form-group">
+            <div class="mb-1">
+              <span
+                class="d-flex align-items-center justify-content-left mx-1 font-weight-bold">ユーザID</span>
+              <span class="form-control bg-whitesmoke" th:text="*{userId}"></span>
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="form-group">
+            <div class="mb-1">
+              <span
+                class="d-flex align-items-center justify-content-left mx-1 font-weight-bold">パスワード</span>
+              <span class="form-control bg-whitesmoke">**********</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="submit"
+                class="btn btn-primary btn-block w-100">登録</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/user/signup/confirm_userinfo.js}"></script>
+</body>
+</html>

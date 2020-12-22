@@ -1,0 +1,36 @@
+html,body {
+  margin: 0;
+  padding: 0;
+}
+
+.bg-login {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.bg-app-image {
+  background-image: url(../img/bg-app-image.jpg);
+  background-size:cover;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;/*ブラー効果でボヤけた部分を非表示*/
+}
+.bg-app-image:before{
+  content: '';
+  background: inherit;/*.bgImageで設定した背景画像を継承する*/
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+  position: absolute;
+  /*ブラー効果で画像の端がボヤけた分だけ位置を調整*/
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;/*重なり順序を一番下にしておく*/
+}

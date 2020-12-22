@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title=パスワード更新メール送信完了">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<link rel="stylesheet" th:href="@{/css/complete_userinfo.css}" />
+</head>
+<body class="register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <th:block th:include="parts/common::logo_box"></th:block>
+    </div>
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">パスワード更新メール送信完了</p>
+        <div>
+          ご登録のメールアドレスにパスワード更新用のURLを送信しました。<br>
+          メールをご確認頂き、パスワードの更新をお願いします。
+        </div>
+        <div>
+          <a class="btn btn-primary w-100" th:href="@{/login}">トップへ戻る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <script th:src="@{/js/user/signup/complete_userinfo.js}"></script>
+</body>
+</html>
