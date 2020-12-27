@@ -1,5 +1,6 @@
 package me.tutttuwi.springboot.management.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationFailureCredentialsExpiredEvent;
@@ -11,7 +12,11 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.extern.slf4j.Slf4j;
+import me.tutttuwi.springboot.management.entity.AccountIndiv;
+import me.tutttuwi.springboot.management.session.CommonSession;
 
 /**
  * <p>
@@ -21,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  * <li>SpringSecurityの認証機能は、認証結果をAuthenticationEventPublisherに渡して認証イベントの通知依頼を行う</li>
  * <li>AuthenticationEventPublisherインターフェースのデフォルトの実装クラスは、認証結果に対応する
  * 認証イベントクラスのインスタンスを生成し、ApplicationEventPublisherに渡してイベントの通知依頼を行う</li>
- * <li>ApplicationEventPublisherインターフェースの実測クラスは、ApplicationListenerインターフェースの実装クラスにイベントを通知する</li>
+ * <li>ApplicationEventPublisherインターフェースの実装クラスは、ApplicationListenerインターフェースの実装クラスにイベントを通知する</li>
  * <li>ApplicationListenerの実装クラスの１つであるApplicationListenerMethodAdaptorは、
  * `@org.springframework.context.event.EventLintener`が付与されているメソッドを呼び出してイベントを通知する</li>
  * </ol>
@@ -32,7 +37,20 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
+@SessionAttributes("scopedTarget.commonSession")
+
 public class AppSecurityEventListener {
+
+  @Autowired
+  AccountUserDetailsService service;
+
+  @Autowired
+  CommonSession commonSession;
+
+  @ModelAttribute
+  CommonSession createSession() {
+    return commonSession;
+  }
 
   // ==============================
   // SUCCESS EVENT HANDLERS
@@ -67,6 +85,15 @@ public class AppSecurityEventListener {
   @EventListener
   public void handleInteractiveAuthenticationSuccess(InteractiveAuthenticationSuccessEvent event) {
     //
+    try {
+      AccountUserDetails userDetails =
+          (AccountUserDetails) event.getAuthentication().getPrincipal();
+      AccountIndiv accountIndiv = service.getUserInfo(userDetails);
+      commonSession.setUsername(accountIndiv.getLstName() + "　" + accountIndiv.getFstName());
+      commonSession.setSidebarModel(service.getMenuInfo());
+    } catch (Throwable tw) {
+      tw.printStackTrace();
+    }
   }
 
   // ==============================

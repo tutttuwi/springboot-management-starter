@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.ort/extras/spring-security">
 <head th:fragment="meta_header(title,links,scripts)">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,6 +60,30 @@
         <b>Management</b> App
       </a>
     </h1>
+  </th:block>
+
+  <th:block th:fragment="content_header(title)">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark" th:text="${title}">ページタイトル位置</h1>
+            <div class="m-2">
+              USER NAME: <span sec:authentication="principal.username">テストユーザ名</span>
+            </div>
+          </div>
+          <!-- パンくずリスト表示領域 -->
+          <!--
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Endpoint</li>
+              </ol>
+            </div>
+            -->
+        </div>
+      </div>
+    </div>
   </th:block>
 
   <th:block th:fragment="end_script()">

@@ -11,14 +11,14 @@
 					"name": "ダッシュボード１",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
-					"link": "#",
+					"link": "/springboot-admin-management/dashboard/dashboard1",
 					"active": false
 				},
 				{
 					"name": "ダッシュボード２",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
-					"link": "#",
+					"link": "/springboot-admin-management/dashboard/dashboard2",
 					"active": false
 				}
 			]
@@ -29,7 +29,22 @@
 			"clazz": "",
 			"link": "#",
 			"active": false,
-			"sidebar-item": []
+			"sidebar-item": [
+				{
+					"name": "ユーザ登録・編集",
+					"icon": "far fa-circle nav-icon",
+					"clazz": "",
+					"link": "/springboot-admin-management/maintenance/user",
+					"active": false
+				},
+				{
+					"name": "メニュー追加・編集",
+					"icon": "far fa-circle nav-icon",
+					"clazz": "",
+					"link": "/springboot-admin-management/maintenance/menu",
+					"active": false
+				}
+			]
 		},
 		{
 			"name": "個人設定",
@@ -39,17 +54,17 @@
 			"active": false,
 			"sidebar-item": [
 				{
-					"name": "個人設定１",
+					"name": "アカウント情報",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
-					"link": "#",
+					"link": "/springboot-admin-management/account/edit",
 					"active": false
 				},
 				{
-					"name": "個人設定２",
+					"name": "パスワード変更",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
-					"link": "#",
+					"link": "/springboot-admin-management/account/password",
 					"active": false
 				}
 			]

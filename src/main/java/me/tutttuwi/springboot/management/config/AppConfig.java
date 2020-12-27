@@ -46,7 +46,12 @@ public class AppConfig implements WebMvcConfigurer {
   private static final String[] EXCLUDE_SOCIAL_INTERCEPTOR =
       {"/favicon.ico", "/css/**", "/js/**", "/img/**", "/lib/**", "/font/**", "/auth/**"};
 
-  // TODO: 多言語対応
+  /**
+   * メッセージリソース設定. <br/>
+   * 必要に応じてリソースファイルを切り替えることで多言語化対応を行う
+   *
+   * @return messageSource
+   */
   @Bean
   public MessageSource messageSource() {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -56,9 +61,10 @@ public class AppConfig implements WebMvcConfigurer {
   }
 
   /**
-   * passwordValidator.
+   * パスワードバリデータ.<br/>
+   * パスワードの利用可能文字種や長さなどルールを設定する
    *
-   * @return
+   * @return passwordValidator
    */
   @Bean
   public PasswordValidator passwordValidator() {

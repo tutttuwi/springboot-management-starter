@@ -21,6 +21,8 @@ public class SidebarModel {
     sidebarGroup.stream().forEach(sidebarGroup -> {
       if (groupName.equals(sidebarGroup.name)) {
         sidebarGroup.setActive(true);
+      } else {
+        sidebarGroup.setActive(false);
       }
     });
   }
@@ -38,8 +40,12 @@ public class SidebarModel {
         sidebarGroup.getSidebarItem().forEach(sidebarItem -> {
           if (itemName.equals(sidebarItem.name)) {
             sidebarItem.setActive(true);
+          } else {
+            sidebarItem.setActive(false);
           }
         });
+      } else {
+        sidebarGroup.setActive(false);
       }
     });
   }

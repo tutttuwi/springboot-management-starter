@@ -42,7 +42,7 @@ public class AppMenuService {
   }
 
   /**
-   * アカウント個人情報取得.
+   * サイドバーメニュー取得.
    *
    * @return sidebarModel SidebarModel
    */

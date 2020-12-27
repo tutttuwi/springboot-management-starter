@@ -104,7 +104,7 @@ settings:
 logging:
   pattern:
     # MDCで設定した値を出力する TODO: 設定調整
-    level: "[%X{FUNCTION_NAME}:%X{X-Track-Id}:%X{LOGIN_USER_ID}] %5p"
+    level: "[%X{FUNCTION_NAME}:%X{X-Track-Id}:%X{LOGIN_USER_ID}:%X{SESSION_ID}] %5p"
 
 #security:
 #  user: 
