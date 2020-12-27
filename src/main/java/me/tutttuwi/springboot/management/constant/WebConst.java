@@ -5,12 +5,12 @@ package me.tutttuwi.springboot.management.constant;
  */
 public interface WebConst {
 
-  /** ---- MDC ---- **/
+  /** ---- MDC. ---- **/
   String MDC_LOGIN_USER_ID = "LOGIN_USER_ID";
 
   String MDC_FUNCTION_NAME = "FUNCTION_NAME";
 
-  /** ---- Message ---- **/
+  /** ---- Message. ---- **/
   String GLOBAL_MESSAGE = "GlobalMessage";
 
   String VALIDATION_ERROR = "ValidationError";
@@ -27,19 +27,19 @@ public interface WebConst {
 
   String MESSAGE_SUCCESS = "Success";
 
-  /** ---- View ---- **/
+  /** ---- View. ---- **/
   String ERROR_VIEW = "error";
 
   String NOTFOUND_VIEW = "notfound";
 
   String FORBIDDEN_VIEW = "forbidden";
 
-  /** ---- DateFormat ---- **/
+  /** ---- DateFormat. ---- **/
   String LOCALDATE_FORMAT = "yyyy/MM/dd";
 
   String LOCALDATETIME_FORMAT = "yyyy/[]M/[]d []H:[]m:[]s";
 
-  /** ---- ViewComponents ---- **/
+  /** ---- ViewComponents. ---- **/
   String MAV_CONST = "Const";
 
   String MAV_ERRORS = "errors";
@@ -48,7 +48,7 @@ public interface WebConst {
 
   String MAV_CODE_CATEGORIES = "CodeCategories";
 
-  /** ---- URLs ---- **/
+  /** ---- URLs. ---- **/
   String HOME_URL = "/";
 
   String ERROR_URL = "/error";

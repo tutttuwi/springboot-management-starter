@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import org.seasar.doma.Dao;
 import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
@@ -14,14 +13,13 @@ import org.seasar.doma.boot.ConfigAutowireable;
 import org.seasar.doma.jdbc.Config;
 import org.seasar.doma.jdbc.builder.SelectBuilder;
 import org.springframework.util.MultiValueMap;
-
 import me.tutttuwi.springboot.management.entity.AccountConnection;
 
 @ConfigAutowireable
 @Dao
 public interface AccountConnectionRepository {
-  //  @Select
-  //  List<Account> selectAll();
+  // @Select
+  // List<Account> selectAll();
 
   @Select
   List<String> findUserIdsWithConnection(String providerId, String providerUserId);
@@ -29,8 +27,8 @@ public interface AccountConnectionRepository {
   @Select
   List<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserId);
 
-  //@Select
-  //AccountConnection selectById(String userId);
+  // @Select
+  // AccountConnection selectById(String userId);
 
   @Select
   List<AccountConnection> findAllConnections(String userId);
@@ -38,8 +36,15 @@ public interface AccountConnectionRepository {
   @Select
   List<AccountConnection> findConnections(String userId, String providerId);
 
-  default List<AccountConnection> findConnectionsToUsers(MultiValueMap<String, String> providerUsers,
-      String userId) {
+  /**
+   * {@code findConnectionsToUsers}.
+   *
+   * @param providerUsers providerUsers
+   * @param userId userId
+   * @return
+   */
+  default List<AccountConnection> findConnectionsToUsers(
+      MultiValueMap<String, String> providerUsers, String userId) {
     Config config = Config.get(this);
     SelectBuilder builder = SelectBuilder.newInstance(config);
     builder.sql("select");
@@ -55,7 +60,8 @@ public interface AccountConnectionRepository {
     builder.sql("expire_time");
     builder.sql("from account_connection");
     builder.sql("where user_id = ").param(String.class, userId).sql("and");
-    for (Iterator<Entry<String, List<String>>> it = providerUsers.entrySet().iterator(); it.hasNext();) {
+    for (Iterator<Entry<String, List<String>>> it = providerUsers.entrySet().iterator(); it
+        .hasNext();) {
       Entry<String, List<String>> entry = it.next();
       String providerId = entry.getKey();
       builder.sql("provider_id = ").param(String.class, providerId).sql("and");
@@ -66,7 +72,7 @@ public interface AccountConnectionRepository {
     }
     builder.sql("order by providerId, rank");
     return builder.getEntityResultList(AccountConnection.class);
-  };
+  }
 
   @Select
   List<AccountConnection> getConnection(String userId, String providerId, String providerUserId);

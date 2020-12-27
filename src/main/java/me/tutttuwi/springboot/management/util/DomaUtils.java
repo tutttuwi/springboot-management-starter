@@ -3,14 +3,14 @@ package me.tutttuwi.springboot.management.util;
 import org.seasar.doma.jdbc.SelectOptions;
 import org.springframework.data.domain.Pageable;
 
+// TODO: 要実装
 /**
- * Doma関連ユーティリティ
- * TODO: 要実装
+ * Doma関連ユーティリティ.
  */
 public class DomaUtils {
 
   /**
-   * SearchOptionsを作成して返します。
+   * SearchOptionsを作成して返します.
    *
    * @return
    */
@@ -19,9 +19,9 @@ public class DomaUtils {
   }
 
   /**
-   * SearchOptionsを作成して返します。
+   * SearchOptionsを作成して返します.
    *
-   * @param pageable
+   * @param pageable Pageable
    * @return
    */
   public static SelectOptions createSelectOptions(Pageable pageable) {
@@ -31,10 +31,10 @@ public class DomaUtils {
   }
 
   /**
-   * SearchOptionsを作成して返します。
+   * SearchOptionsを作成して返します.
    *
-   * @param page
-   * @param perpage
+   * @param page int
+   * @param perpage int
    * @return
    */
   public static SelectOptions createSelectOptions(int page, int perpage) {

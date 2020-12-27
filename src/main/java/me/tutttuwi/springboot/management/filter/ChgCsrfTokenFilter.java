@@ -1,12 +1,10 @@
 package me.tutttuwi.springboot.management.filter;
 
 import java.io.IOException;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,12 +12,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class ChgCsrfTokenFilter extends OncePerRequestFilter {
 
   /**
-   * CSRFトークンリポジトリ
+   * CSRFトークンリポジトリ.
    */
   private final HttpSessionCsrfTokenRepository csrfTokenRepository;
 
   /**
-   * コンストラクタ
+   * コンストラクタ.
+   *
    * @param csrfTokenRepository CSRFトークンリポジトリ
    */
   public ChgCsrfTokenFilter(HttpSessionCsrfTokenRepository csrfTokenRepository) {
@@ -27,11 +26,11 @@ public class ChgCsrfTokenFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
-    //CSRFトークンを取得する
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException {
+    // CSRFトークンを取得する
     CsrfToken beforeToken = this.csrfTokenRepository.loadToken(request);
-    //CSRFトークンが取得できた場合は、CSRFトークンを更新する
+    // CSRFトークンが取得できた場合は、CSRFトークンを更新する
     if (beforeToken != null) {
       this.csrfTokenRepository.saveToken(null, request, response);
       CsrfToken csrfToken = this.csrfTokenRepository.generateToken(request);
@@ -39,7 +38,7 @@ public class ChgCsrfTokenFilter extends OncePerRequestFilter {
       request.setAttribute(CsrfToken.class.getName(), csrfToken);
       request.setAttribute(csrfToken.getParameterName(), csrfToken);
     }
-    //次のFilterを呼び出す
+    // 次のFilterを呼び出す
     filterChain.doFilter(request, response);
   }
 

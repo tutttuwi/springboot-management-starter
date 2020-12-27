@@ -2,7 +2,6 @@ package me.tutttuwi.springboot.management.security;
 
 import java.util.Collection;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.dao.AccountInfoRepository;
 import me.tutttuwi.springboot.management.entity.AccountInfo;
@@ -24,21 +22,21 @@ public class AccountUserDetailsService implements UserDetailsService {
   @Autowired
   AccountInfoRepository accountRepository;
 
+  /**
+   * loadUserByUsername.
+   *
+   * @param id id
+   * @param password password
+   * @return UserDetails
+   * @throws UsernameNotFoundException UsernameNotFoundException
+   */
   @Transactional(readOnly = true)
-  public UserDetails loadUserByUsername(String id, String password) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String id, String password)
+      throws UsernameNotFoundException {
     log.info("id + password is ... " + id + " " + password);
     AccountInfo account = Optional.ofNullable(accountRepository.selectByIdAndPw(id, password))
         .orElseThrow(() -> new UsernameNotFoundException("user not found."));
     return new AccountUserDetails(account, getAuthorities(account));
-  };
-
-  private Collection<GrantedAuthority> getAuthorities(AccountInfo account) {
-    //    if (account.isAdmin()) {
-    if (false) {
-      return AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
-    } else {
-      return AuthorityUtils.createAuthorityList("ROLE_USER");
-    }
   }
 
   @Override
@@ -51,5 +49,14 @@ public class AccountUserDetailsService implements UserDetailsService {
       throw new UsernameNotFoundException("User not found: " + id);
     }
     return new AccountUserDetails(ac, getAuthorities(ac));
+  }
+
+  private Collection<GrantedAuthority> getAuthorities(AccountInfo account) {
+    // if (account.isAdmin()) {
+    if (false) {
+      return AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
+    } else {
+      return AuthorityUtils.createAuthorityList("ROLE_USER");
+    }
   }
 }

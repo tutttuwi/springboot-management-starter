@@ -18,11 +18,11 @@ public class SocialUserConnectionSignUp implements ConnectionSignUp {
     UserProfile profile = connection.fetchUserProfile();
 
     // プロバイダから取得した情報を元にローカルユーザー情報作成
-    //    SocialUser user = signupService.createUser(profile);
+    // SocialUser user = signupService.createUser(profile);
 
     // 自動生成されたローカルユーザーID返却
     // このユーザーIDがUserConnectionテーブルPKとして使用される
-    //    return user.getUserId();
+    // return user.getUserId();
     return "user";
   }
 }

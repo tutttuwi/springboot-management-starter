@@ -1,17 +1,14 @@
 package me.tutttuwi.springboot.management.bean;
 
 import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.*;
-
 import java.util.Collection;
 import java.util.Map;
-
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-
 import me.tutttuwi.springboot.management.view.ExcelView;
 
 public class UserExcel implements ExcelView.Callback {
@@ -44,15 +41,15 @@ public class UserExcel implements ExcelView.Callback {
     header.getCell(2).setCellStyle(style);
 
     // 明細
-    //    @SuppressWarnings("unchecked")
-    //    val users = (List<User>) data;
+    // @SuppressWarnings("unchecked")
+    // val users = (List<User>) data;
     //
-    //    int count = 1;
-    //    for (User user : users) {
-    //      Row userRow = sheet.createRow(count++);
-    //      userRow.createCell(0).setCellValue(user.getLastName());
-    //      userRow.createCell(1).setCellValue(user.getFirstName());
-    //      userRow.createCell(2).setCellValue(user.getEmail());
-    //    }
+    // int count = 1;
+    // for (User user : users) {
+    // Row userRow = sheet.createRow(count++);
+    // userRow.createCell(0).setCellValue(user.getLastName());
+    // userRow.createCell(1).setCellValue(user.getFirstName());
+    // userRow.createCell(2).setCellValue(user.getEmail());
+    // }
   }
 }

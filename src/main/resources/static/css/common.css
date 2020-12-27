@@ -15,3 +15,7 @@ li.common-input-error-text:before {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.white-space-initial {
+  white-space: initial;
+}

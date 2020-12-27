@@ -1,7 +1,7 @@
 package me.tutttuwi.springboot.management.exception;
 
 /**
- * 二重送信エラー
+ * 二重送信エラー.
  */
 public class DoubleSubmitErrorException extends RuntimeException {
 

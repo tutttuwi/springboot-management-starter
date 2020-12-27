@@ -23,30 +23,38 @@
               class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">USER NAME</a>
+            <a href="#" class="d-block"
+              th:text="${commonSession.username}">USER NAME</a>
           </div>
         </div>
 
         <!-- Sidebar Menu -->
-        <nav class="mt-2">
+        <nav class="mt-2"
+          th:each="sidebarGroup : ${commonSession.sidebarModel.sidebarGroup}">
           <ul class="nav nav-pills nav-sidebar flex-column"
             data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item has-treeview menu-open"><a href="#"
-              class="nav-link active"> <i class="nav-icon fas fa-tachometer-alt"></i>
+            <li class="nav-item has-treeview" th:classappend="${sidebarGroup.active ? 'menu-open' : ''}"><a
+              th:href="${sidebarGroup.link}" class="nav-link" th:classappend="${sidebarGroup.active ? 'active' : ''}">
+                <i th:classappend="${sidebarGroup.icon}"></i>
                 <p>
-                  ダッシュボード<i class="right fas fa-angle-left"></i>
+                  [[${sidebarGroup.name}]]
+                  <th:block
+                    th:if="${sidebarGroup.sidebarItem.size() > 0}">
+                    <i class="right fas fa-angle-left"></i>
+                  </th:block>
                 </p>
-            </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item"><a href="#"
-                  class="nav-link active"> <i class="nav-icon fas fa-genderless"></i>
-                    <p>ダッシュボード１</p>
-                </a></li>
-                <li class="nav-item"><a href="#"
-                  class="nav-link"> <i class="nav-icon fas fa-genderless"></i>
-                    <p>ダッシュボード２</p>
-                </a></li>
-              </ul></li>
+            </a> <th:block th:if="${sidebarGroup.sidebarItem.size() > 0}">
+                <ul class="nav nav-treeview">
+                  <li
+                    th:each="sidebarItem : ${sidebarGroup.sidebarItem}"
+                    class="nav-item"><a
+                    th:href="${sidebarItem.link}"
+                    class="nav-link"  th:classappend="${sidebarItem.active ? 'active' : ''}"> <i
+                      th:classappend="${sidebarItem.icon}"></i>
+                      <p>[[${sidebarItem.name}]]</p>
+                  </a></li>
+                </ul></li>
+            </th:block>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

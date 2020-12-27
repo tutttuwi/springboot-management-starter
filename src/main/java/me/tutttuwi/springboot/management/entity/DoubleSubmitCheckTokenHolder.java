@@ -1,7 +1,7 @@
 package me.tutttuwi.springboot.management.entity;
 
 /**
- * 二重送信防止チェックトークンホルダー
+ * 二重送信防止チェックトークンホルダー.
  */
 public class DoubleSubmitCheckTokenHolder {
 
@@ -10,10 +10,10 @@ public class DoubleSubmitCheckTokenHolder {
   private static final ThreadLocal<String> ACTUAL_TOKEN = new ThreadLocal<>();
 
   /**
-   * トークンを保存します。
+   * トークンを保存します.
    *
-   * @param expected
-   * @param actual
+   * @param expected String
+   * @param actual String
    */
   public static void set(String expected, String actual) {
     EXPECTED_TOKEN.set(expected);

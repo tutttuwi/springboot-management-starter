@@ -2,16 +2,14 @@ package me.tutttuwi.springboot.management.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import lombok.val;
 import me.tutttuwi.springboot.management.controller.AbstractApiController;
 
 /**
- * 基底インターセプター
+ * 基底インターセプター.
  */
 public abstract class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
 
@@ -30,15 +28,15 @@ public abstract class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
   }
 
   @Override
-  public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-      throws Exception {
+  public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+      Object handler, Exception ex) throws Exception {
     // 処理完了後
   }
 
   /**
-   * RestControllerであるかどうかを示す値を返します。
+   * RestControllerであるかどうかを示す値を返します.
    *
-   * @param handler
+   * @param handler Object
    * @return
    */
   protected boolean isRestController(Object handler) {
@@ -52,10 +50,10 @@ public abstract class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
   }
 
   /**
-   * 引数のオブジェクトが指定のクラスであるかどうかを示すを返します。
+   * 引数のオブジェクトが指定のクラスであるかどうかを示すを返します.
    *
-   * @param obj
-   * @param clazz
+   * @param obj Object
+   * @param clazz Class<?>
    * @return
    */
   protected boolean isInstanceOf(Object obj, Class<?> clazz) {
@@ -68,9 +66,9 @@ public abstract class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
   }
 
   /**
-   * HandlerのBeanを返します。
+   * HandlerのBeanを返します.
    *
-   * @param handler
+   * @param handler Object
    * @return
    */
   @SuppressWarnings("unchecked")

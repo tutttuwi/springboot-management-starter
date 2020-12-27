@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,9 +19,11 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
   }
 
   @Override
-  public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
+  public SocialUserDetails loadUserByUserId(String userId)
+      throws UsernameNotFoundException, DataAccessException {
     UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
-    return new SocialUser(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+    return new SocialUser(userDetails.getUsername(), userDetails.getPassword(),
+        userDetails.getAuthorities());
   }
 
 }

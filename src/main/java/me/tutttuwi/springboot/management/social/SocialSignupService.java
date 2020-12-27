@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class SocialSignupService {
 
   public SocialUser createUser(UserProfile profile) {
-    //    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     SocialUser user = new SocialUser(null, null, null);
     return user;
   }

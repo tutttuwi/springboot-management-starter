@@ -2,7 +2,6 @@ package me.tutttuwi.springboot.management.controller.api;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.constant.WebConst;
@@ -23,23 +21,25 @@ import me.tutttuwi.springboot.management.exception.ValidationErrorException;
 import me.tutttuwi.springboot.management.util.MessageUtils;
 
 /**
- * API用の例外ハンドラー
+ * API用の例外ハンドラー.
+ *
+ * @author Tomo
+ *
  */
 @RestControllerAdvice(annotations = RestController.class) // HTMLコントローラーの例外を除外する
 @Slf4j
 public class AppErrorApiController extends ResponseEntityExceptionHandler {
 
   /**
-   * 入力チェックエラーのハンドリング
+   * 入力チェックエラーのハンドリング.
    *
-   * @param ex
-   * @param request
+   * @param ex exeption
+   * @param request request
    * @return
    */
   @ExceptionHandler(ValidationErrorException.class)
   public ResponseEntity<Object> handleValidationErrorException(Exception ex, WebRequest request) {
-    val headers = new HttpHeaders();
-    val status = HttpStatus.BAD_REQUEST;
+
     val fieldErrorContexts = new ArrayList<FieldErrorResource>();
 
     if (ex instanceof ValidationErrorException) {
@@ -61,43 +61,46 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
     }
 
     val locale = request.getLocale();
-    val message = MessageUtils.getMessage(WebConst.VALIDATION_ERROR, null, "validation error", locale);
+    val message = MessageUtils.getMsg(WebConst.VALIDATION_ERROR, null, "validation error", locale);
     val errorContext = new ErrorResourceImpl();
     errorContext.setMessage(message);
     errorContext.setFieldErrors(fieldErrorContexts);
 
+    val headers = new HttpHeaders();
+    val status = HttpStatus.BAD_REQUEST;
     return new ResponseEntity<>(errorContext, headers, status);
   }
 
   /**
-   * データ不存在エラーのハンドリング
+   * データ不存在エラーのハンドリング.
    *
-   * @param ex
-   * @param request
+   * @param ex exception
+   * @param request request
    * @return
    */
   @ExceptionHandler(NoDataFoundException.class)
   public ResponseEntity<Object> handleNoDataFoundException(Exception ex, WebRequest request) {
-    val headers = new HttpHeaders();
-    val status = HttpStatus.OK;
 
     String parameterDump = this.dumpParameterMap(request.getParameterMap());
     log.info("no data found. dump: {}", parameterDump);
 
-    val message = MessageUtils.getMessage(WebConst.NO_DATA_FOUND_ERROR, null, "no data found", request.getLocale());
+    val message = MessageUtils.getMsg(WebConst.NO_DATA_FOUND_ERROR, null, "no data found",
+        request.getLocale());
     val errorResource = new ErrorResourceImpl();
     errorResource.setRequestId(String.valueOf(MDC.get("X-Track-Id")));
     errorResource.setMessage(message);
     errorResource.setFieldErrors(new ArrayList<>());
 
+    val headers = new HttpHeaders();
+    val status = HttpStatus.OK;
     return new ResponseEntity<>(errorResource, headers, status);
   }
 
   /**
-   * 予期せぬ例外のハンドリング
+   * 予期せぬ例外のハンドリング.
    *
-   * @param ex
-   * @param request
+   * @param ex exception
+   * @param request request
    * @return
    */
   @ExceptionHandler(Exception.class)
@@ -106,13 +109,13 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
   }
 
   @Override
-  protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
+  protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+      HttpHeaders headers, HttpStatus status, WebRequest request) {
     String parameterDump = this.dumpParameterMap(request.getParameterMap());
     log.error(String.format("unexpected error has occurred. dump: %s", parameterDump), ex);
 
     val locale = request.getLocale();
-    val message = MessageUtils.getMessage(WebConst.UNEXPECTED_ERROR, null, "unexpected error", locale);
+    val message = MessageUtils.getMsg(WebConst.UNEXPECTED_ERROR, null, "unexpected error", locale);
     val errorResource = new ErrorResourceImpl();
     errorResource.setRequestId(String.valueOf(MDC.get("X-Track-Id")));
     errorResource.setMessage(message);
@@ -125,9 +128,9 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
   }
 
   /**
-   * パラメータをダンプする。
+   * パラメータをダンプする.
    *
-   * @param parameterMap
+   * @param parameterMap parametersMap
    * @return
    */
   protected String dumpParameterMap(Map<String, String[]> parameterMap) {
@@ -140,8 +143,9 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
       sb.delete(sb.length() - 1, sb.length()).append("], ");
     });
     int length = sb.length();
-    if (2 <= length)
+    if (2 <= length) {
       sb.delete(length - 2, length);
+    }
 
     return sb.toString();
   }

@@ -8,6 +8,14 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Component
 public class AppMailTemplate {
+
+  /**
+   * getText.
+   *
+   * @param templateName String
+   * @param context Context
+   * @return
+   */
   public String getText(String templateName, Context context) {
     SpringTemplateEngine templateEngine = new SpringTemplateEngine();
     templateEngine.setTemplateResolver(mailTemplateResolver());

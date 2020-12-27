@@ -1,29 +1,24 @@
 package me.tutttuwi.springboot.management.view;
 
-import static com.fasterxml.jackson.dataformat.csv.CsvGenerator.Feature.*;
-import static org.springframework.http.HttpHeaders.*;
 
+import static org.springframework.http.HttpHeaders.*;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.servlet.view.AbstractView;
-
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-
 import lombok.Setter;
 import lombok.val;
 import me.tutttuwi.springboot.management.util.EncodeUtils;
 
 /**
- * CSVビュー
+ * CSVビュー.
  */
 public class CsvView extends AbstractView {
 
@@ -39,24 +34,25 @@ public class CsvView extends AbstractView {
   @Setter
   protected List<String> columns;
 
+
   /**
-   * CSVマッパーを生成する。
+   * CSVマッパーを生成する.
    *
    * @return
    */
   static CsvMapper createCsvMapper() {
     CsvMapper mapper = new CsvMapper();
-    mapper.configure(ALWAYS_QUOTE_STRINGS, true);
+    // mapper.configure(ALWAYS_QUOTE_STRINGS, true);
     mapper.findAndRegisterModules();
     return mapper;
   }
 
   /**
-   * コンストラクタ
+   * コンストラクタ.
    *
-   * @param clazz
-   * @param data
-   * @param filename
+   * @param clazz clazz
+   * @param data data
+   * @param filename filename
    */
   public CsvView(Class<?> clazz, Collection<?> data, String filename) {
     setContentType("application/octet-stream; charset=Windows-31J;");
@@ -71,8 +67,8 @@ public class CsvView extends AbstractView {
   }
 
   @Override
-  protected final void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+  protected final void renderMergedOutputModel(Map<String, Object> model,
+      HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
     val encodedFilename = EncodeUtils.encodeUtf8(filename);
@@ -95,7 +91,7 @@ public class CsvView extends AbstractView {
 
     // 書き出し
     val outputStream = response.getOutputStream();
-    //    val outputStream = createTemporaryOutputStream(); // MEMO: レスポンスから取得しないと書き込めないみたい
+    // val outputStream = createTemporaryOutputStream(); // MEMO: レスポンスから取得しないと書き込めないみたい
     try (Writer writer = new OutputStreamWriter(outputStream, "Windows-31J")) {
       csvMapper.writer(schema).writeValue(writer, data);
     }

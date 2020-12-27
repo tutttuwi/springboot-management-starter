@@ -1,17 +1,14 @@
 package me.tutttuwi.springboot.management.entity;
 
 import static java.util.stream.Collectors.*;
-
 import java.util.List;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.seasar.doma.Id;
 import org.seasar.doma.jdbc.entity.EntityListener;
 import org.seasar.doma.jdbc.entity.PreDeleteContext;
 import org.seasar.doma.jdbc.entity.PreInsertContext;
 import org.seasar.doma.jdbc.entity.PreUpdateContext;
-
 import lombok.NoArgsConstructor;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
@@ -72,14 +69,15 @@ public class DefaultEntityListener<ENTITY> implements EntityListener<ENTITY> {
       val ids = getIds(domaDto);
 
       // 物理削除した場合はログ出力する
-      log.info("データを物理削除しました。entity={}, id={}, deletedBy={}, deletedAt={}", name, ids, deletedBy, deletedAt);
+      log.info("データを物理削除しました。entity={}, id={}, deletedBy={}, deletedAt={}", name, ids, deletedBy,
+          deletedAt);
     }
   }
 
   /**
-   * Idアノテーションが付与されたフィールドの値のリストを返します。
+   * Idアノテーションが付与されたフィールドの値のリストを返します.
    *
-   * @param dto
+   * @param dto Dto
    * @return
    */
   protected List<Object> getIds(Dto dto) {

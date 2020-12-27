@@ -1,17 +1,13 @@
 package me.tutttuwi.springboot.management.view;
 
 import static org.springframework.http.HttpHeaders.*;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.view.AbstractView;
-
 import lombok.val;
 import me.tutttuwi.springboot.management.util.EncodeUtils;
 import net.sf.jasperreports.engine.JRException;
@@ -27,7 +23,7 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 /**
- * PDFビュー
+ * PDFビュー.
  */
 public class PdfView extends AbstractView {
 
@@ -38,11 +34,11 @@ public class PdfView extends AbstractView {
   protected String filename;
 
   /**
-   * コンストラクタ
+   * コンストラクタ.
    *
-   * @param report
-   * @param data
-   * @param filename
+   * @param report String
+   * @param data Collection<?>
+   * @param filename String
    */
   public PdfView(String report, Collection<?> data, String filename) {
     super();
@@ -81,7 +77,7 @@ public class PdfView extends AbstractView {
   }
 
   /**
-   * 帳票レイアウトを読み込む
+   * 帳票レイアウトを読み込む.
    *
    * @return
    */

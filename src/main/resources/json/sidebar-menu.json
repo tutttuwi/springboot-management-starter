@@ -1,0 +1,58 @@
+{
+	"sidebar-group": [
+		{
+			"name": "ダッシュボード",
+			"icon": "nav-icon fas fa-tachometer-alt",
+			"clazz": "",
+			"link": "#",
+			"active": false,
+			"sidebar-item": [
+				{
+					"name": "ダッシュボード１",
+					"icon": "far fa-circle nav-icon",
+					"clazz": "",
+					"link": "#",
+					"active": false
+				},
+				{
+					"name": "ダッシュボード２",
+					"icon": "far fa-circle nav-icon",
+					"clazz": "",
+					"link": "#",
+					"active": false
+				}
+			]
+		},
+		{
+			"name": "メンテナンス",
+			"icon": "nav-icon fas fa-fan",
+			"clazz": "",
+			"link": "#",
+			"active": false,
+			"sidebar-item": []
+		},
+		{
+			"name": "個人設定",
+			"icon": "nav-icon fas fa-user-edit",
+			"clazz": "",
+			"link": "#",
+			"active": false,
+			"sidebar-item": [
+				{
+					"name": "個人設定１",
+					"icon": "far fa-circle nav-icon",
+					"clazz": "",
+					"link": "#",
+					"active": false
+				},
+				{
+					"name": "個人設定２",
+					"icon": "far fa-circle nav-icon",
+					"clazz": "",
+					"link": "#",
+					"active": false
+				}
+			]
+		}
+	]
+}

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.constant.WebConst;
 import me.tutttuwi.springboot.management.controller.AbstractUiController;
@@ -29,62 +28,67 @@ public class AppLoginUiController extends AbstractUiController {
     return "login";
   }
 
+  /**
+   * login.
+   *
+   * @param form LoginFormRequest
+   * @param result BindingResult
+   * @return HTML Path String
+   */
   @PostMapping(value = "/login")
   public String login(@Validated @ModelAttribute LoginFormRequest form, BindingResult result) {
     if (result.hasErrors()) {
       return "login";
     }
     return "forward:" + WebConst.LOGIN_PROCESSING_URL;
-    //    return "redirect:" + "/menu";
+    // return "redirect:" + "/menu";
   }
 
   /**
-   * ログイン成功
+   * ログイン成功.
    *
-   * @param form
-   * @param attributes
+   * @param form LoginFormRequest
+   * @param attributes RedirectAttributes
    * @return
    */
   @PostMapping(WebConst.LOGIN_SUCCESS_URL)
   public String loginSuccess(@ModelAttribute LoginFormRequest form, RedirectAttributes attributes) {
-    //    attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage("login.success"));
+    // attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage("login.success"));
     return "redirect:/menu";
   }
 
   /**
-   * ログイン失敗
+   * ログイン失敗.
    *
-   * @param form
-   * @param model
+   * @param form LoginFormRequest
    * @return
    */
   @GetMapping(WebConst.LOGIN_FAILURE_URL)
   public String loginFailure(@ModelAttribute LoginFormRequest form) {
-    //    model.addAttribute(GLOBAL_MESSAGE, getMessage("login.failed"));
+    // model.addAttribute(GLOBAL_MESSAGE, getMessage("login.failed"));
     return "login?error";
   }
 
   /**
-   * タイムアウトした時
+   * タイムアウトした時.
    *
-   * @param form
-   * @param model
+   * @param form LoginFormRequest
    * @return
    */
   @GetMapping(WebConst.LOGIN_TIMEOUT_URL)
   public String loginTimeout(@ModelAttribute LoginFormRequest form) {
-    //    model.addAttribute(GLOBAL_MESSAGE, getMessage("login.timeout"));
+    // model.addAttribute(GLOBAL_MESSAGE, getMessage("login.timeout"));
     return "login?timeout";
   }
 
   /**
-   * ログアウト
+   * ログアウト.
    *
    * @return
    */
   @GetMapping(WebConst.LOGOUT_SUCCESS_URL)
   public String logout(@ModelAttribute LoginFormRequest form, RedirectAttributes attributes) {
-    //    attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage("logout.success"));
+    // attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage("logout.success"));
     return "redirect:/login";
   }
 

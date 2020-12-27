@@ -3,13 +3,11 @@ package me.tutttuwi.springboot.management.util;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import me.tutttuwi.springboot.management.dao.AuthKeyRepository;
 import me.tutttuwi.springboot.management.entity.AuthKey;
 import me.tutttuwi.springboot.management.entity.Numbering;
@@ -23,8 +21,9 @@ public class AppUtil {
   AuthKeyRepository authKeyDao;
 
   /**
-   * パスワード検証
-   * @param password
+   * パスワード検証.
+   *
+   * @param password String
    * @return
    */
   public boolean checkPasswordRequirement(String password) {
@@ -35,6 +34,7 @@ public class AppUtil {
 
   /**
    * パスワード暗号化処理
+   *
    * @param password
    * @return
    */
@@ -44,6 +44,7 @@ public class AppUtil {
 
   /**
    * 採番テーブルの情報を基に次の番号を採番し、キー文字列を返却する
+   *
    * @param numbering
    * @return
    * @throws Throwable
@@ -51,7 +52,8 @@ public class AppUtil {
   public String getNextNumStr(Numbering nextNumbering) throws Throwable {
     long nextNum = nextNumbering.getNumIssued();
     String prefixChar = StringUtils.trim(nextNumbering.getPrefixChar());
-    String nextNumStr = StringUtils.leftPad(String.valueOf(nextNum), nextNumbering.getNumDigits(), "0");
+    String nextNumStr =
+        StringUtils.leftPad(String.valueOf(nextNum), nextNumbering.getNumDigits(), "0");
     if (StringUtils.isNotEmpty(prefixChar)) {
       nextNumStr = prefixChar + nextNumStr.substring(prefixChar.length());
     }
@@ -60,6 +62,7 @@ public class AppUtil {
 
   /**
    * 採番テーブルの情報を基に次の番号を採番する
+   *
    * @param numbering
    * @return
    * @throws Throwable
@@ -79,6 +82,7 @@ public class AppUtil {
   /**
    * 現在時刻取得<br/>
    * DBやAPIから時刻を取得するケースを鑑みてメソッドをUTILに分ける
+   *
    * @return
    */
   public Timestamp getTimeNow() {
@@ -87,6 +91,7 @@ public class AppUtil {
 
   /**
    * 認証キー情報の期限切れチェック
+   *
    * @param key
    * @return
    * @throws Throwable
@@ -96,7 +101,7 @@ public class AppUtil {
     AuthKey authSignUpEmail = authKeyDao.selectByAuthKey(key);
     if (Objects.isNull(authSignUpEmail)) {
       return true;
-      //throw new NotFoundException("認証キーに対応するデータが見つかりませんでした。"); //TODO: エラー共通化
+      // throw new NotFoundException("認証キーに対応するデータが見つかりませんでした。"); //TODO: エラー共通化
     }
     if (LocalDateTime.now().isAfter(authSignUpEmail.getExpireDt().toLocalDateTime())) {
       return true;

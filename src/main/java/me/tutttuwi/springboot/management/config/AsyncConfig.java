@@ -10,6 +10,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @EnableAsync
 public class AsyncConfig {
   // TODO: 設定ファイル管理
+  /**
+   * taskExecutor.
+   * 
+   * @return
+   */
   @Bean
   public TaskExecutor taskExecutor() {
     ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();

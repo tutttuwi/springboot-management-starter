@@ -1,12 +1,10 @@
 package me.tutttuwi.springboot.management.util;
 
 import java.util.function.Consumer;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
-
 import lombok.Data;
 
 @Data
@@ -42,6 +40,11 @@ public class AppMailer {
     return this.msg;
   }
 
+  /**
+   * send.
+   *
+   * @param block {@code Consumer<AppMailer>}
+   */
   public void send(final Consumer<AppMailer> block) {
     final AppMailer mailer = new AppMailer();
     mailer.setMsg(new SimpleMailMessage());

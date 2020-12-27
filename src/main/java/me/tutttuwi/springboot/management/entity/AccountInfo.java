@@ -1,42 +1,43 @@
 package me.tutttuwi.springboot.management.entity;
 
 import java.sql.Timestamp;
-
 import org.seasar.doma.Entity;
 import org.seasar.doma.Id;
 import org.seasar.doma.jdbc.entity.NamingType;
-
 import lombok.Data;
 
 @Data()
 @Entity(naming = NamingType.SNAKE_UPPER_CASE)
-//@Table(name = "user_idpw")
+// @Table(name = "user_idpw")
 public class AccountInfo {
 
-  /** AccountID */
+  /** AccountID. */
   @Id
   private String accountId;
-  /** ユーザID */
+  /** ユーザID. */
   private String userId;
-  /** PW */
+  /** PW. */
   private String password;
-  /** ユーザ区分 */
+  /** ユーザ区分. */
   private String userKb;
-  /** 有効FLG */
+  /** 有効FLG. */
   private boolean enabled;
-  /** アカウント有効期限FLG */
+  /** アカウント有効期限FLG. */
   private boolean accountNonExpired;
-  /** クレデンシャル有効期限FLG */
+  /** クレデンシャル有効期限FLG. */
   private boolean credentialsNonExpired;
-  /** アカウントロックFLG */
+  /** アカウントロックFLG. */
   private boolean accountNonLocked;
-  /** 権限 */
+  /** 権限. */
   private String roleId;
-  /** 作成日時 */
+  /** 作成日時. */
   private Timestamp createDt;
-  /** 更新日時 */
+  /** 更新日時. */
   private Timestamp updateDt;
 
+  /**
+   * コンストラクタ.
+   */
   public AccountInfo() {
     // TODO: 初期処理はサービス内に記載する
     userKb = "01";

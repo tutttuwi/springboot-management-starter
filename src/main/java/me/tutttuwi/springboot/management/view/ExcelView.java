@@ -1,21 +1,17 @@
 package me.tutttuwi.springboot.management.view;
 
 import static org.springframework.http.HttpHeaders.*;
-
 import java.util.Collection;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
-
 import lombok.val;
 import me.tutttuwi.springboot.management.util.EncodeUtils;
 
 /**
- * Excelビュー
+ * Excelビュー.
  */
 public class ExcelView extends AbstractXlsxView {
 
@@ -26,18 +22,19 @@ public class ExcelView extends AbstractXlsxView {
   protected Callback callback;
 
   /**
-   * コンストラクタ
+   * コンストラクタ.
    */
   public ExcelView() {
-    setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=Windows-31J;");
+    setContentType(
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=Windows-31J;");
   }
 
   /**
-   * コンストラクタ
+   * コンストラクタ.
    *
-   * @param callback
-   * @param data
-   * @param filename
+   * @param callback Callback
+   * @param data Collection<?>
+   * @param filename String
    */
   public ExcelView(Callback callback, Collection<?> data, String filename) {
     this();
@@ -47,8 +44,8 @@ public class ExcelView extends AbstractXlsxView {
   }
 
   @Override
-  protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+  protected void buildExcelDocument(Map<String, Object> model, Workbook workbook,
+      HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
     val encodedFilename = EncodeUtils.encodeUtf8(filename);
@@ -62,11 +59,11 @@ public class ExcelView extends AbstractXlsxView {
   public interface Callback {
 
     /**
-     * Excelブックを構築します。
+     * Excelブックを構築します.
      *
-     * @param model
-     * @param data
-     * @param workbook
+     * @param model {@code Map<String, Object>}
+     * @param data Collection<?>
+     * @param workbook Workbook
      */
     void buildExcelWorkbook(Map<String, Object> model, Collection<?> data, Workbook workbook);
   }

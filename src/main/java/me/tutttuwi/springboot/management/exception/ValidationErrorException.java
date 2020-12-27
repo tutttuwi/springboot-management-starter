@@ -1,13 +1,11 @@
 package me.tutttuwi.springboot.management.exception;
 
 import static java.util.Optional.*;
-
 import java.util.Optional;
-
 import org.springframework.validation.Errors;
 
 /**
- * バリデーションエラー
+ * バリデーションエラー.
  */
 public class ValidationErrorException extends RuntimeException {
 

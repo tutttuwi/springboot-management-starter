@@ -8,7 +8,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Validation用プロパティとメッセージプロパティを統合
+ * Validation用プロパティとメッセージプロパティを統合.
+ *
  * @author Tomo
  *
  */
@@ -22,6 +23,11 @@ public class MessageConfig implements WebMvcConfigurer {
     return validator();
   }
 
+  /**
+   * method {@code validator}.
+   *
+   * @return
+   */
   @Bean
   public LocalValidatorFactoryBean validator() {
     LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();

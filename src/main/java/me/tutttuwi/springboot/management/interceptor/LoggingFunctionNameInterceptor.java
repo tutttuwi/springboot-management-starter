@@ -2,16 +2,14 @@ package me.tutttuwi.springboot.management.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.MDC;
-
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.constant.WebConst;
 import me.tutttuwi.springboot.management.util.FunctionNameAware;
 
 /**
- * 機能名をログに出力する
+ * 機能名をログに出力する.
  */
 @Slf4j
 public class LoggingFunctionNameInterceptor extends BaseHandlerInterceptor {

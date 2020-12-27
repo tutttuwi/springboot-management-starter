@@ -1,9 +1,7 @@
 package me.tutttuwi.springboot.management.controller.api.resource;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +18,5 @@ public class ErrorResourceImpl extends ResourceImpl {
   // 入力エラー
   List<FieldErrorResource> fieldErrors;
 
-  public ErrorResourceImpl() {
-  }
+  public ErrorResourceImpl() {}
 }

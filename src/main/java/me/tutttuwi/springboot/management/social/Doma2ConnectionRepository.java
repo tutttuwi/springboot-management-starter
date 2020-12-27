@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,13 +22,12 @@ import org.springframework.social.connect.NotConnectedException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.dao.AccountConnectionRepository;
 import me.tutttuwi.springboot.management.entity.AccountConnection;
 
 @Slf4j
-//@Service
+// @Service
 public class Doma2ConnectionRepository implements ConnectionRepository {
 
   private final String userId;
@@ -43,10 +41,11 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
   private final AccountConnectionRepository accountConnectionRepository;
 
   // MEMO: tablePrefixは使用しない
-  //private final String tablePrefix;
+  // private final String tablePrefix;
 
-  //  public Doma2ConnectionRepository(String userId, JdbcTemplate jdbcTemplate,
-  //      ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor, String tablePrefix) {
+  // public Doma2ConnectionRepository(String userId, JdbcTemplate jdbcTemplate,
+  // ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor, String
+  // tablePrefix) {
   public Doma2ConnectionRepository(String userId, JdbcTemplate jdbcTemplate,
       ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor,
       AccountConnectionRepository accountConnectionRepository) {
@@ -56,19 +55,21 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
     this.textEncryptor = textEncryptor;
     this.accountConnectionRepository = accountConnectionRepository;
     // MEMO: tablePrefixは使用しない
-    //    this.tablePrefix = tablePrefix;
+    // this.tablePrefix = tablePrefix;
   }
 
   @Override
   public MultiValueMap<String, Connection<?>> findAllConnections() {
     List<AccountConnection> acList = accountConnectionRepository.findAllConnections(userId);
     List<Connection<?>> resultList = connectionMapper.map(acList);
-    //    List<Connection<?>> resultList = jdbcTemplate
-    //        .query(selectFromUserConnection() + " where userId = ? order by providerId, rank", connectionMapper, userId);
-    MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
+    // List<Connection<?>> resultList = jdbcTemplate
+    // .query(selectFromUserConnection() + " where userId = ? order by providerId, rank",
+    // connectionMapper, userId);
+    MultiValueMap<String, Connection<?>> connections =
+        new LinkedMultiValueMap<String, Connection<?>>();
     Set<String> registeredProviderIds = connectionFactoryLocator.registeredProviderIds();
     for (String registeredProviderId : registeredProviderIds) {
-      connections.put(registeredProviderId, Collections.<Connection<?>> emptyList());
+      connections.put(registeredProviderId, Collections.<Connection<?>>emptyList());
     }
     for (Connection<?> connection : resultList) {
       String providerId = connection.getKey().getProviderId();
@@ -82,7 +83,8 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
 
   @Override
   public List<Connection<?>> findConnections(String providerId) {
-    List<AccountConnection> acList = accountConnectionRepository.findConnections(userId, providerId);
+    List<AccountConnection> acList =
+        accountConnectionRepository.findConnections(userId, providerId);
     return connectionMapper.map(acList);
   }
 
@@ -94,13 +96,16 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
   }
 
   @Override
-  public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUsers) {
+  public MultiValueMap<String, Connection<?>> findConnectionsToUsers(
+      MultiValueMap<String, String> providerUsers) {
     if (providerUsers == null || providerUsers.isEmpty()) {
       throw new IllegalArgumentException("Unable to execute find: no providerUsers provided");
     }
-    List<AccountConnection> acList = accountConnectionRepository.findConnectionsToUsers(providerUsers, userId);
+    List<AccountConnection> acList =
+        accountConnectionRepository.findConnectionsToUsers(providerUsers, userId);
     List<Connection<?>> resultList = connectionMapper.map(acList);
-    MultiValueMap<String, Connection<?>> connectionsForUsers = new LinkedMultiValueMap<String, Connection<?>>();
+    MultiValueMap<String, Connection<?>> connectionsForUsers =
+        new LinkedMultiValueMap<String, Connection<?>>();
     for (Connection<?> connection : resultList) {
       String providerId = connection.getKey().getProviderId();
       List<String> userIds = providerUsers.get(providerId);
@@ -122,8 +127,8 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
   @Override
   public Connection<?> getConnection(ConnectionKey connectionKey) {
     try {
-      List<AccountConnection> acList = accountConnectionRepository.getConnection(userId, connectionKey.getProviderId(),
-          connectionKey.getProviderUserId());
+      List<AccountConnection> acList = accountConnectionRepository.getConnection(userId,
+          connectionKey.getProviderId(), connectionKey.getProviderUserId());
       List<Connection<?>> resultList = connectionMapper.map(acList);
       return resultList.get(0);
     } catch (EmptyResultDataAccessException e) {
@@ -215,20 +220,24 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
 
   /**
    * TODO: 説明記載
+   *
    * @return
    */
-  //  private String selectFromUserConnection() {
-  //    return "select userId, providerId, providerUserId, displayName, profileUrl, imageUrl, accessToken, secret, refreshToken, expireTime from "
-  //        + tablePrefix + "UserConnection";
-  //  }
+  // private String selectFromUserConnection() {
+  // return "select userId, providerId, providerUserId, displayName, profileUrl, imageUrl,
+  // accessToken, secret, refreshToken, expireTime from "
+  // + tablePrefix + "UserConnection";
+  // }
 
   /**
    * TODO: 説明記載
+   *
    * @param providerId
    * @return
    */
   private Connection<?> findPrimaryConnection(String providerId) {
-    List<AccountConnection> acList = accountConnectionRepository.findPrimaryConnection(userId, providerId);
+    List<AccountConnection> acList =
+        accountConnectionRepository.findPrimaryConnection(userId, providerId);
     List<Connection<?>> connections = connectionMapper.map(acList);
     if (connections.size() > 0) {
       return connections.get(0);
@@ -237,53 +246,56 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
     }
   }
 
-  //  @SuppressWarnings("all")
-  //  Function<Stream<AccountConnection>, List<Connection<?>>> doma2ConnectionMapper = stream -> {
-  //    List<Connection<?>> connections = new LinkedList<Connection<?>>();
-  //    return stream.map((AccountConnection ac) -> {
-  //      //      try {
-  //      ConnectionData connectionData = mapConnectionData(ac);
-  //      ConnectionFactory<?> connectionFactory = connectionFactoryLocator
-  //          .getConnectionFactory(connectionData.getProviderId());
-  //      return connectionFactory.createConnection(connectionData);
-  //      //      } catch (Exception ex) {
-  //      //        ex.printStackTrace();
-  //      //      }
-  //    }).collect(Collectors.toList());
-  //  };
+  // @SuppressWarnings("all")
+  // Function<Stream<AccountConnection>, List<Connection<?>>> doma2ConnectionMapper = stream -> {
+  // List<Connection<?>> connections = new LinkedList<Connection<?>>();
+  // return stream.map((AccountConnection ac) -> {
+  // // try {
+  // ConnectionData connectionData = mapConnectionData(ac);
+  // ConnectionFactory<?> connectionFactory = connectionFactoryLocator
+  // .getConnectionFactory(connectionData.getProviderId());
+  // return connectionFactory.createConnection(connectionData);
+  // // } catch (Exception ex) {
+  // // ex.printStackTrace();
+  // // }
+  // }).collect(Collectors.toList());
+  // };
   //
-  //  private ConnectionData mapConnectionData(AccountConnection ac) {
-  //    return new ConnectionData(ac.getProviderId(), ac.getProviderUserId(), ac.getDisplayName(),
-  //        ac.getProfileUrl(), ac.getImageUrl(),
-  //        decrypt(ac.getAccessToken()), decrypt(ac.getSecret()), decrypt(ac.getRefreshToken()),
-  //        expireTime(ac.getExpireTime()));
-  //    //    return new ConnectionData(rs.getString("providerId"), rs.getString("providerUserId"), rs.getString("displayName"),
-  //    //        rs.getString("profileUrl"), rs.getString("imageUrl"),
-  //    //        decrypt(rs.getString("accessToken")), decrypt(rs.getString("secret")), decrypt(rs.getString("refreshToken")),
-  //    //        expireTime(rs.getLong("expireTime")));
-  //  }
+  // private ConnectionData mapConnectionData(AccountConnection ac) {
+  // return new ConnectionData(ac.getProviderId(), ac.getProviderUserId(), ac.getDisplayName(),
+  // ac.getProfileUrl(), ac.getImageUrl(),
+  // decrypt(ac.getAccessToken()), decrypt(ac.getSecret()), decrypt(ac.getRefreshToken()),
+  // expireTime(ac.getExpireTime()));
+  // // return new ConnectionData(rs.getString("providerId"), rs.getString("providerUserId"),
+  // rs.getString("displayName"),
+  // // rs.getString("profileUrl"), rs.getString("imageUrl"),
+  // // decrypt(rs.getString("accessToken")), decrypt(rs.getString("secret")),
+  // decrypt(rs.getString("refreshToken")),
+  // // expireTime(rs.getLong("expireTime")));
+  // }
   //
-  //  // Helper
+  // // Helper
   //
-  //  private String decrypt(String encryptedText) {
-  //    return encryptedText != null ? textEncryptor.decrypt(encryptedText) : encryptedText;
-  //  }
+  // private String decrypt(String encryptedText) {
+  // return encryptedText != null ? textEncryptor.decrypt(encryptedText) : encryptedText;
+  // }
   //
-  //  private Long expireTime(long expireTime) {
-  //    return expireTime == 0 ? null : expireTime;
-  //  }
+  // private Long expireTime(long expireTime) {
+  // return expireTime == 0 ? null : expireTime;
+  // }
   //
-  //  private <A> String getProviderId(Class<A> apiType) {
-  //    return connectionFactoryLocator.getConnectionFactory(apiType).getProviderId();
-  //  }
+  // private <A> String getProviderId(Class<A> apiType) {
+  // return connectionFactoryLocator.getConnectionFactory(apiType).getProviderId();
+  // }
   //
-  //  private String encrypt(String text) {
-  //    return text != null ? textEncryptor.encrypt(text) : text;
-  //  }
+  // private String encrypt(String text) {
+  // return text != null ? textEncryptor.encrypt(text) : text;
+  // }
 
   // Native JDBC Connection
 
-  private final ServiceProviderConnectionMapper connectionMapper = new ServiceProviderConnectionMapper();
+  private final ServiceProviderConnectionMapper connectionMapper =
+      new ServiceProviderConnectionMapper();
 
   // TODO: マッパーをDOMA用に用意する必要がある
   private final class ServiceProviderConnectionMapper {
@@ -302,16 +314,15 @@ public class Doma2ConnectionRepository implements ConnectionRepository {
 
     private Connection<?> mapRow(AccountConnection ac, int rowNum) throws SQLException {
       ConnectionData connectionData = mapConnectionData(ac);
-      ConnectionFactory<?> connectionFactory = connectionFactoryLocator
-          .getConnectionFactory(connectionData.getProviderId());
+      ConnectionFactory<?> connectionFactory =
+          connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId());
       return connectionFactory.createConnection(connectionData);
     }
 
     private ConnectionData mapConnectionData(AccountConnection ac) throws SQLException {
       return new ConnectionData(ac.getProviderId(), ac.getProviderUserId(), ac.getDisplayName(),
-          ac.getProfileUrl(), ac.getImageUrl(),
-          decrypt(ac.getAccessToken()), decrypt(ac.getSecret()), decrypt(ac.getRefreshToken()),
-          expireTime(ac.getExpireTime()));
+          ac.getProfileUrl(), ac.getImageUrl(), decrypt(ac.getAccessToken()),
+          decrypt(ac.getSecret()), decrypt(ac.getRefreshToken()), expireTime(ac.getExpireTime()));
     }
 
     private String decrypt(String encryptedText) {

@@ -1,25 +1,23 @@
 package me.tutttuwi.springboot.management.entity;
 
 import java.sql.Timestamp;
-
 import org.seasar.doma.Entity;
 import org.seasar.doma.jdbc.entity.NamingType;
-
 import lombok.Data;
 
 @Data()
 @Entity(naming = NamingType.SNAKE_UPPER_CASE)
 public class AccountHistory {
 
-  /** SEQ */
+  /** SEQ. */
   private Long seq;
-  /** ユーザーエージェント */
+  /** ユーザーエージェント. */
   private String userAgent;
-  /** 操作区分 */
+  /** 操作区分. */
   private String opeKb;
-  /** 作成日時 */
+  /** 作成日時. */
   private Timestamp createDt;
-  /** 更新日時 */
+  /** 更新日時. */
   private Timestamp updateDt;
 
   public AccountHistory() {

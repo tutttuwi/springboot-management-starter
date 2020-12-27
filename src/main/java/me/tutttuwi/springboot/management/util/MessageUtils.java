@@ -1,16 +1,12 @@
 package me.tutttuwi.springboot.management.util;
 
 import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
 public class MessageUtils {
 
@@ -22,47 +18,47 @@ public class MessageUtils {
   }
 
   /**
-   * メッセージを取得します。
+   * メッセージを取得します.
    *
-   * @param key
+   * @param key String
    * @return
    */
-  public static String getMessage(String key) {
+  public static String getMsg(String key) {
     Locale locale = LocaleContextHolder.getLocale();
     return MessageUtils.messageSource.getMessage(key, null, locale);
   }
 
   /**
-   * メッセージを取得します。
+   * メッセージを取得します.
    *
-   * @param key
-   * @param args
+   * @param key String
+   * @param args Object...
    * @return
    */
-  public static String getMessage(String key, Object... args) {
+  public static String getMsg(String key, Object... args) {
     Locale locale = LocaleContextHolder.getLocale();
     return MessageUtils.messageSource.getMessage(key, args, locale);
   }
 
   /**
-   * ロケールを指定してメッセージを取得します。
+   * ロケールを指定してメッセージを取得します.
    *
-   * @param key
-   * @param locale
-   * @param args
+   * @param key String
+   * @param locale Locale
+   * @param args Object...
    * @return
    */
-  public static String getMessage(String key, Locale locale, Object... args) {
+  public static String getMsg(String key, Locale locale, Object... args) {
     return MessageUtils.messageSource.getMessage(key, args, locale);
   }
 
   /**
-   * メッセージを取得します。
+   * メッセージを取得します.
    *
-   * @param resolvable
+   * @param resolvable MessageSourceResolvable
    * @return
    */
-  public static String getMessage(MessageSourceResolvable resolvable) {
+  public static String getMsg(MessageSourceResolvable resolvable) {
     Locale locale = LocaleContextHolder.getLocale();
     return MessageUtils.messageSource.getMessage(resolvable, locale);
   }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.request.SignUpUserFormRequest;
 import me.tutttuwi.springboot.management.service.AppSignUpService;
@@ -35,14 +34,31 @@ public class AppSignUpUiController {
     return signUpUserSession;
   }
 
+  /**
+   * index.
+   *
+   * @param inputForm SignUpUserFormRequest
+   * @return HTML Path String
+   * @throws Throwable Any Exception
+   */
   @GetMapping(value = "")
   public String index(SignUpUserFormRequest inputForm) throws Throwable { // 必ず初期化用にフォームオブジェクト渡すこと
-    System.out.println("SignUpUserFormRequest(index):" + signUpUserSession.getSignUpUserFormRequest());
+    System.out
+        .println("SignUpUserFormRequest(index):" + signUpUserSession.getSignUpUserFormRequest());
     return "/user/signup/input_userinfo";
   }
 
+  /**
+   * input.
+   *
+   * @param inputForm SignUpUserFormRequest
+   * @param result BindingResult
+   * @return HTML Path String
+   * @throws Throwable Any Exception
+   */
   @PostMapping(value = "/input")
-  public String input(@Validated SignUpUserFormRequest inputForm, BindingResult result) throws Throwable {
+  public String input(@Validated SignUpUserFormRequest inputForm, BindingResult result)
+      throws Throwable {
     if (result.hasErrors()) {
       return "/user/signup/input_userinfo";
     }
@@ -50,23 +66,46 @@ public class AppSignUpUiController {
     return "/user/signup/confirm_userinfo";
   }
 
+  /**
+   * confirm.
+   *
+   * @return HTML Path String
+   * @throws Throwable Any Exception
+   */
   @PostMapping(value = "/confirm")
   public String confirm() throws Throwable {
-    System.out.println("SignUpUserFormRequest(before complete)" + signUpUserSession.getSignUpUserFormRequest());
+    System.out.println(
+        "SignUpUserFormRequest(before complete)" + signUpUserSession.getSignUpUserFormRequest());
     SignUpUserFormRequest form = signUpUserSession.getSignUpUserFormRequest();
     service.registUserInfo(form);
     return "redirect:/user/signup/complete";
   }
 
+  /**
+   * complete.
+   *
+   * @param sessionStatus SessionStatus
+   * @return HTML Path String
+   * @throws Throwable Any Exception
+   */
   @GetMapping(value = "/complete")
   public String complete(SessionStatus sessionStatus) throws Throwable {
     sessionStatus.setComplete();
-    System.out.println("SignUpUserFormRequest(after complete):" + signUpUserSession.getSignUpUserFormRequest());
+    System.out.println(
+        "SignUpUserFormRequest(after complete):" + signUpUserSession.getSignUpUserFormRequest());
     return "/user/signup/complete_userinfo";
   }
 
+  /**
+   * emailauth.
+   *
+   * @param emailAuthKey String
+   * @return HTML Path String
+   * @throws Throwable Any Exception
+   */
   @GetMapping(value = "/emailauth")
-  public String emailauth(@RequestParam(name = "key", required = true) String emailAuthKey) throws Throwable {
+  public String emailauth(@RequestParam(name = "key", required = true) String emailAuthKey)
+      throws Throwable {
     if (service.isAuthKeyExpired(emailAuthKey)) {
       return "/user/signup/warn_emailauthkeyexpired";
     }

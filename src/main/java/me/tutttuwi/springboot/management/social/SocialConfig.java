@@ -1,7 +1,6 @@
 package me.tutttuwi.springboot.management.social;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,6 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
-
 import me.tutttuwi.springboot.management.dao.AccountConnectionRepository;
 
 @Configuration
@@ -43,9 +41,10 @@ public class SocialConfig extends SocialConfigurerAdapter {
   }
 
   @Override
-  public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-    Doma2UsersConnectionRepository repository = new Doma2UsersConnectionRepository(
-        dataSource, connectionFactoryLocator, Encryptors.noOpText(), accountConnectionRepository);
+  public UsersConnectionRepository getUsersConnectionRepository(
+      ConnectionFactoryLocator connectionFactoryLocator) {
+    Doma2UsersConnectionRepository repository = new Doma2UsersConnectionRepository(dataSource,
+        connectionFactoryLocator, Encryptors.noOpText(), accountConnectionRepository);
     repository.setConnectionSignUp(new SocialUserConnectionSignUp(signupService));
     return repository;
   }
@@ -75,23 +74,26 @@ public class SocialConfig extends SocialConfigurerAdapter {
   @Override
   public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
     cfConfig.addConnectionFactory(new TwitterConnectionFactory("clientId", "clientSecret"));
-    cfConfig.addConnectionFactory(new FacebookConnectionFactory("259477695116176", "5953fafbec10f70e209b5301398c5bae"));
+    cfConfig.addConnectionFactory(
+        new FacebookConnectionFactory("259477695116176", "5953fafbec10f70e209b5301398c5bae"));
     cfConfig.addConnectionFactory(new GoogleConnectionFactory("clientId", "clientSecret"));
-    //    cfConfig.addConnectionFactory(new TwitterConnectionFactory("consumerKey", "consumerSecret"));
-    //    cfConfig.addConnectionFactory(new LinkedInConnectionFactory("consumerKey", "consumerSecret"));
+    // cfConfig.addConnectionFactory(new TwitterConnectionFactory("consumerKey", "consumerSecret"));
+    // cfConfig.addConnectionFactory(new LinkedInConnectionFactory("consumerKey",
+    // "consumerSecret"));
   }
 
   @Bean
-  public ConnectController connectController(
-      ConnectionFactoryLocator connectionFactoryLocator,
+  public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator,
       ConnectionRepository connectionRepository) {
     return new ConnectController(connectionFactoryLocator, connectionRepository);
   }
 
   @Bean
-  public ProviderSignInController providerSignInController(ConnectionFactoryLocator connectionFactoryLocator,
+  public ProviderSignInController providerSignInController(
+      ConnectionFactoryLocator connectionFactoryLocator,
       UsersConnectionRepository usersConnectionRepository) {
-    return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new SocialSignInAdapter());
+    return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository,
+        new SocialSignInAdapter());
   }
 
 }

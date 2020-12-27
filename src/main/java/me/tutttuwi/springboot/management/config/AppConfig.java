@@ -1,9 +1,7 @@
 package me.tutttuwi.springboot.management.config;
 
 import java.util.Locale;
-
 import javax.inject.Inject;
-
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.LengthRule;
@@ -27,7 +25,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
-
 import me.tutttuwi.springboot.management.interceptor.CustomCallableProcessingInterceptor;
 import me.tutttuwi.springboot.management.interceptor.LoggingFunctionNameInterceptor;
 import me.tutttuwi.springboot.management.interceptor.LoggingInterceptor;
@@ -36,8 +33,8 @@ import me.tutttuwi.springboot.management.thymleaf.ThymeleafConfig;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@Import({ ThymeleafConfig.class, // Thymeleafを使用することを明示
-    GoogleAutoConfiguration.class })
+@Import({ThymeleafConfig.class, // Thymeleafを使用することを明示
+    GoogleAutoConfiguration.class})
 @EnableSwagger2
 public class AppConfig implements WebMvcConfigurer {
 
@@ -46,9 +43,8 @@ public class AppConfig implements WebMvcConfigurer {
 
   private @Inject UsersConnectionRepository usersConnectionRepository;
 
-  private static final String[] EXCLUDE_SOCIAL_INTERCEPTOR = {
-      "/favicon.ico", "/css/**", "/js/**", "/img/**", "/lib/**", "/font/**", "/auth/**"
-  };
+  private static final String[] EXCLUDE_SOCIAL_INTERCEPTOR =
+      {"/favicon.ico", "/css/**", "/js/**", "/img/**", "/lib/**", "/font/**", "/auth/**"};
 
   // TODO: 多言語対応
   @Bean
@@ -59,27 +55,31 @@ public class AppConfig implements WebMvcConfigurer {
     return messageSource;
   }
 
+  /**
+   * passwordValidator.
+   *
+   * @return
+   */
   @Bean
   public PasswordValidator passwordValidator() {
-    //    PasswordValidator passwordValidator = new PasswordValidator(new LengthRule(8, 30),
-    //        new CharacterRule(EnglishCharacterData.UpperCase, 1),
-    //        new CharacterRule(EnglishCharacterData.LowerCase, 1),
-    //        new CharacterRule(EnglishCharacterData.Digit),
-    //        new CharacterRule(EnglishCharacterData.Special));
-    PasswordValidator passwordValidator = new PasswordValidator(
-        new LengthRule(8, 30),
+    // PasswordValidator passwordValidator = new PasswordValidator(new LengthRule(8, 30),
+    // new CharacterRule(EnglishCharacterData.UpperCase, 1),
+    // new CharacterRule(EnglishCharacterData.LowerCase, 1),
+    // new CharacterRule(EnglishCharacterData.Digit),
+    // new CharacterRule(EnglishCharacterData.Special));
+    PasswordValidator passwordValidator = new PasswordValidator(new LengthRule(8, 30),
         new CharacterRule(EnglishCharacterData.Alphabetical, 1),
         new CharacterRule(EnglishCharacterData.Digit, 1),
-        //        new IllegalCharacterRule("$".toCharArray()), // 指定文字を禁止するルール
-        //        new CharacterRule(EnglishCharacterData.Special), // Specialを含めなくてもOK 記号文字許容する
+        // new IllegalCharacterRule("$".toCharArray()), // 指定文字を禁止するルール
+        // new CharacterRule(EnglishCharacterData.Special), // Specialを含めなくてもOK 記号文字許容する
         new WhitespaceRule());
     return passwordValidator;
   }
 
-  //  @Bean
-  //  public MailSender mailSender() {
-  //    return new JavaMailSenderImpl();
-  //  }
+  // @Bean
+  // public MailSender mailSender() {
+  // return new JavaMailSenderImpl();
+  // }
 
   @Override
   public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
@@ -88,22 +88,17 @@ public class AppConfig implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new LoggingInterceptor())
-        .addPathPatterns("/**")
+    registry.addInterceptor(new LoggingInterceptor()).addPathPatterns("/**")
         .excludePathPatterns("/resources/**");
-    registry.addInterceptor(new LocaleChangeInterceptor())
-        .addPathPatterns("/**")
-        .excludePathPatterns("/resources/**")
-        .excludePathPatterns("/**/*.html");
-    registry.addInterceptor(new LoggingFunctionNameInterceptor())
-        .addPathPatterns("/**");
-    registry.addInterceptor(new RequestTrackingInterceptor())
-        .addPathPatterns("/**");
+    registry.addInterceptor(new LocaleChangeInterceptor()).addPathPatterns("/**")
+        .excludePathPatterns("/resources/**").excludePathPatterns("/**/*.html");
+    registry.addInterceptor(new LoggingFunctionNameInterceptor()).addPathPatterns("/**");
+    registry.addInterceptor(new RequestTrackingInterceptor()).addPathPatterns("/**");
     // TODO: SESSION_IDをログ出力させたい
     // Spring Social
-    //    registry.addInterceptor(new SocialUserInterceptor(usersConnectionRepository))
-    //        .addPathPatterns("/**")
-    //        .excludePathPatterns(EXCLUDE_SOCIAL_INTERCEPTOR);
+    // registry.addInterceptor(new SocialUserInterceptor(usersConnectionRepository))
+    // .addPathPatterns("/**")
+    // .excludePathPatterns(EXCLUDE_SOCIAL_INTERCEPTOR);
   }
 
   @Bean
@@ -113,15 +108,13 @@ public class AppConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/static/**")
-        .addResourceLocations("classpath:/static/")
+    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/")
         .resourceChain(CACHE)
-        .addResolver(new VersionResourceResolver()
-            .addContentVersionStrategy("/**"));
+        .addResolver(new VersionResourceResolver().addContentVersionStrategy("/**"));
   }
 
   /**
-   * Dispatcherサーブレットをデフォルトサーブレットへ転送する機能を有効化
+   * Dispatcherサーブレットをデフォルトサーブレットへ転送する機能を有効化.
    */
   @Override
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -129,7 +122,8 @@ public class AppConfig implements WebMvcConfigurer {
   }
 
   /**
-   * デフォルトのロケール定義
+   * デフォルトのロケール定義.
+   *
    * @return resolver
    */
   public LocaleResolver localeResolver() {
@@ -141,8 +135,8 @@ public class AppConfig implements WebMvcConfigurer {
   // MEMO: ViewControllerの利用
   // WebMvcConfigurerのaddViewControllersを実装してルーティング設定
   // Viewを返却するだけであればこれでOK
-  //	@Override
-  //	public void addViewControllers(ViewControllerRegistry registry) {
-  //		registry.addViewController("/").setViewName("index");
-  //	}
+  // @Override
+  // public void addViewControllers(ViewControllerRegistry registry) {
+  // registry.addViewController("/").setViewName("index");
+  // }
 }

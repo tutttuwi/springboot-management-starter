@@ -1,7 +1,7 @@
 package me.tutttuwi.springboot.management.util;
 
 /**
- * XORShift乱数生成器
+ * XORShift乱数生成器.
  */
 public class XORShiftRandom {
 
@@ -15,6 +15,12 @@ public class XORShiftRandom {
     this.last = seed;
   }
 
+  /**
+   * nextInt.
+   * 
+   * @param max int
+   * @return
+   */
   public int nextInt(int max) {
     last ^= (last << 21);
     last ^= (last >>> 35);

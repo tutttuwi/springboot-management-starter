@@ -1,13 +1,10 @@
 package me.tutttuwi.springboot.management.request;
 
 import java.io.Serializable;
-
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.annotaion.CheckPasswordRequirement;
@@ -27,6 +24,11 @@ public class ForgotpasswordUpdateFormRequest implements Serializable {
   private String retypePassword;
   private String authKey;
 
+  /**
+   * パスワード合致確認.
+   *
+   * @return boolean
+   */
   @AssertTrue(message = "確認用パスワードが異なります")
   public boolean isNotMatchPassword() {
     if (StringUtils.equals(password, retypePassword)) {

@@ -1,17 +1,15 @@
 package me.tutttuwi.springboot.management.bean;
 
 import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true) // 定義されていないプロパティを無視してマッピングする
-@JsonPropertyOrder({ "ユーザーID", "苗字", "名前", "メールアドレス", "電話番号1", "郵便番号", "住所1" }) // CSVのヘッダ順
+@JsonPropertyOrder({"ユーザーID", "苗字", "名前", "メールアドレス", "電話番号1", "郵便番号", "住所1"}) // CSVのヘッダ順
 @Getter
 @Setter
 public class UserCsv implements Serializable {

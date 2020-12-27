@@ -1,15 +1,12 @@
 package me.tutttuwi.springboot.management.annotaion;
 
 import java.util.Objects;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.dao.AccountEmailRepository;
 import me.tutttuwi.springboot.management.dao.AccountInfoRepository;
@@ -60,8 +57,7 @@ public class CheckForgotPasswordRequirementValidator
       return true;
     }
     context.disableDefaultConstraintViolation();
-    context.buildConstraintViolationWithTemplate(message)
-        .addPropertyNode(correlationErrorProperty)
+    context.buildConstraintViolationWithTemplate(message).addPropertyNode(correlationErrorProperty)
         .addConstraintViolation();
     return false;
   }

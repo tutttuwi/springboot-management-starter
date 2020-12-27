@@ -12,9 +12,10 @@ public class AuditInfoHolder {
   private static final ThreadLocal<LocalDateTime> AUDIT_DATE_TIME = new ThreadLocal<>();
 
   /**
-   * 監査情報を保存します。
+   * 監査情報を保存します.
    *
-   * @param username
+   * @param username String
+   * @param localDateTime LocalDateTime
    */
   public static void set(String username, LocalDateTime localDateTime) {
     AUDIT_USER.set(username);
@@ -22,7 +23,7 @@ public class AuditInfoHolder {
   }
 
   /**
-   * 監査ユーザーを返します。
+   * 監査ユーザーを返します.
    *
    * @return
    */
@@ -31,7 +32,7 @@ public class AuditInfoHolder {
   }
 
   /**
-   * 監査時刻を返します。
+   * 監査時刻を返します.
    *
    * @return
    */
@@ -40,7 +41,7 @@ public class AuditInfoHolder {
   }
 
   /**
-   * 監査情報をクリアします。
+   * 監査情報をクリアします.
    */
   public static void clear() {
     AUDIT_USER.remove();
