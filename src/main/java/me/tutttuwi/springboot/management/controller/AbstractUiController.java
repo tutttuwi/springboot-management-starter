@@ -11,7 +11,7 @@ import me.tutttuwi.springboot.management.util.Authorizable;
 import me.tutttuwi.springboot.management.util.FunctionNameAware;
 
 /**
- * 基底UIコントローラー
+ * 基底UIコントローラー.
  */
 @Slf4j
 public abstract class AbstractUiController extends BaseController
