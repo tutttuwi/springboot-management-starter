@@ -44,7 +44,7 @@ public class AppConfig implements WebMvcConfigurer {
   private @Inject UsersConnectionRepository usersConnectionRepository;
 
   private static final String[] EXCLUDE_SOCIAL_INTERCEPTOR =
-      {"/favicon.ico", "/css/**", "/js/**", "/img/**", "/lib/**", "/font/**", "/auth/**"};
+      {"/**/favicon.ico", "/css/**", "/js/**", "/img/**", "/lib/**", "/font/**", "/auth/**"};
 
   /**
    * メッセージリソース設定. <br/>

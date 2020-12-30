@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
-import me.tutttuwi.springboot.management.constant.WebConst;
+import me.tutttuwi.springboot.management.constant.MsgConst;
 import me.tutttuwi.springboot.management.controller.api.resource.ErrorResourceImpl;
 import me.tutttuwi.springboot.management.controller.api.resource.FieldErrorResource;
 import me.tutttuwi.springboot.management.exception.NoDataFoundException;
@@ -61,7 +61,8 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
     }
 
     val locale = request.getLocale();
-    val message = MessageUtils.getMsg(WebConst.VALIDATION_ERROR, null, "validation error", locale);
+    val message =
+        MessageUtils.getMsg(MsgConst.VALIDATION_ERROR.KEY, null, "validation error", locale);
     val errorContext = new ErrorResourceImpl();
     errorContext.setMessage(message);
     errorContext.setFieldErrors(fieldErrorContexts);
@@ -84,7 +85,7 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
     String parameterDump = this.dumpParameterMap(request.getParameterMap());
     log.info("no data found. dump: {}", parameterDump);
 
-    val message = MessageUtils.getMsg(WebConst.NO_DATA_FOUND_ERROR, null, "no data found",
+    val message = MessageUtils.getMsg(MsgConst.ERROR_DATA_NOT_FOUND.KEY, null, "no data found",
         request.getLocale());
     val errorResource = new ErrorResourceImpl();
     errorResource.setRequestId(String.valueOf(MDC.get("X-Track-Id")));
@@ -115,7 +116,8 @@ public class AppErrorApiController extends ResponseEntityExceptionHandler {
     log.error(String.format("unexpected error has occurred. dump: %s", parameterDump), ex);
 
     val locale = request.getLocale();
-    val message = MessageUtils.getMsg(WebConst.UNEXPECTED_ERROR, null, "unexpected error", locale);
+    val message =
+        MessageUtils.getMsg(MsgConst.ERROR_UNEXPECTED.KEY, null, "unexpected error", locale);
     val errorResource = new ErrorResourceImpl();
     errorResource.setRequestId(String.valueOf(MDC.get("X-Track-Id")));
     errorResource.setMessage(message);

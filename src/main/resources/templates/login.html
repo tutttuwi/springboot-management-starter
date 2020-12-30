@@ -78,7 +78,7 @@
                   data-sitekey="type-your-site-key-here"
                   data-callback='onSubmit' data-action='submit'>ログイン</button>
                 -->
-                <button type="submit" class="btn btn-primary btn-block" onClick="doLogin()">ログイン</button>
+                <button type="submit" class="btn btn-primary btn-block">ログイン</button>
               </div>
             </div>
             <input type="hidden" name="sitekey"
@@ -122,10 +122,10 @@
        document.querySelector("[name='loginForm']").submit();
        }
        */
-       $("[name=loginForm]").submit(function(){
-         login.submit();
-         return true;
-       });
+      $("[name=loginForm]").submit(function() {
+        login.submit();
+        return true;
+      });
     </script>
 </body>
 </html>

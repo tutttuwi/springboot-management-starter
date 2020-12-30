@@ -8,6 +8,9 @@ import lombok.Data;
 @Data
 public class SidebarGroup {
 
+  @SerializedName("key")
+  @Expose
+  public String key;
   @SerializedName("name")
   @Expose
   public String name;

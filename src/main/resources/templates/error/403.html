@@ -3,7 +3,7 @@
 <head
   th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
 <meta charset="UTF-8" />
-<!-- <link rel="stylesheet" th:href="@{/css/error/404.css}" /> -->
+<!-- <link rel="stylesheet" th:href="@{/css/error/403.css}" /> -->
 </head>
 <body class="hold-transition layout-top-nav">
   <div class="wrapper">
@@ -22,7 +22,7 @@
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1 class="m-0 text-dark">
-                ページが見つかりませんでした <small></small>
+                権限エラー <small></small>
               </h1>
             </div>
           </div>
@@ -33,13 +33,16 @@
       ============================== */-->
       <section class="content">
         <div class="error-page">
-          <h2 class="headline text-warning">
-            <i class="fas fa-exclamation-triangle text-warn"></i>
+          <h2 class="headline text-danger">
+            <i class="fas fa-exclamation-triangle text-danger"></i>
           </h2>
+
           <div class="error-content">
-            <h3 class="mb-2">お探しのページが見つかりませんでした。</h3>
+            <h3 class="mb-2">コンテンツを参照する権限がありません。</h3>
+
             <p>
-              ホームに戻って再度ご確認ください。
+              お手数をおかけしますが、アクセス先のURLが正しいかどうかお確かめください。<br/>
+              また、必要な場合は管理者にお問い合わせください。
             </p>
             <a th:href="@{/menu}">
               <button class="btn btn-default btn-block">ホームへ戻る</button>
@@ -59,7 +62,7 @@
 
   </div>
   <th:block th:include="parts/common::end_script"></th:block>
-<!--   <script th:src="@{/js/error/404.js}"></script> -->
+<!--   <script th:src="@{/js/error/403.js}"></script> -->
 </body>
 
 </html>

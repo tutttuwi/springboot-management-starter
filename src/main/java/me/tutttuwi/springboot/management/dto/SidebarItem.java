@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 public class SidebarItem {
 
+  @SerializedName("key")
+  @Expose
+  public String key;
   @SerializedName("name")
   @Expose
   public String name;

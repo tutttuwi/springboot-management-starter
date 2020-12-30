@@ -1,27 +1,27 @@
 package me.tutttuwi.springboot.management.controller.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.extern.slf4j.Slf4j;
 import me.tutttuwi.springboot.management.constant.WebConst;
 import me.tutttuwi.springboot.management.controller.AbstractUiController;
-import me.tutttuwi.springboot.management.security.AccountUserDetails;
-import me.tutttuwi.springboot.management.service.AppMenuService;
 import me.tutttuwi.springboot.management.session.CommonSession;
 
 @Slf4j
 @Controller
-@RequestMapping("")
+@RequestMapping("maintenance")
 @SessionAttributes("scopedTarget.commonSession")
-public class AppMenuUiController extends AbstractUiController {
+public class AppMaintenanceUiController extends AbstractUiController {
 
-  @Autowired
-  AppMenuService service;
+  /**
+   * PAGE NAME Final String.
+   */
+  private static final String PAGE_NAME = "maintenance";
 
   @Autowired
   CommonSession commonSession;
@@ -32,20 +32,20 @@ public class AppMenuUiController extends AbstractUiController {
   }
 
   /**
-   * メニューコントローラ.
+   * maintenance routing.
    *
-   * @param userDetails AccountUserDetails
    * @return HTML Path String
    * @throws Throwable Any Exception
    */
-  @GetMapping(value = "/menu")
-  public String menu(@AuthenticationPrincipal AccountUserDetails userDetails) throws Throwable {
-    commonSession.getSidebarModel().setActive("dashboard", "dashboard1");
-    return "page/dashboard1";
+  @GetMapping(value = "/{path}")
+  public String maintenance(@PathVariable("path") String path) throws Throwable {
+    String itemKey = PAGE_NAME + "_" + path;
+    commonSession.getSidebarModel().setActive(PAGE_NAME, itemKey);
+    return WebConst.PAGE_URL + "/" + itemKey;
   }
 
   @Override
   public String getFunctionName() {
-    return WebConst.FNC_MENU;
+    return WebConst.FNC_MAINTENANCE;
   }
 }

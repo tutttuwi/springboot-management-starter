@@ -13,40 +13,52 @@ public class SidebarModel {
   public List<SidebarGroup> sidebarGroup = null;
 
   /**
-   * setActive.
+   * サイドバーページアクティブ表示設定.<br/>
+   * 指定されたグループキーをもとに、該当するグループとアイテムにアクティブを設定する アクティブ設定された項目がフロントエンドでアクティブ表示されることを期待する。
    *
-   * @param groupName String
+   * @param groupKey String
    */
-  public void setActive(String groupName) {
+  public void setActive(String groupKey) {
     sidebarGroup.stream().forEach(sidebarGroup -> {
-      if (groupName.equals(sidebarGroup.name)) {
+      if (groupKey.equals(sidebarGroup.key)) {
         sidebarGroup.setActive(true);
-      } else {
-        sidebarGroup.setActive(false);
+      }
+    });
+
+  }
+
+  /**
+   * サイドバーページアクティブ表示設定.<br/>
+   * 指定されたグループキー、アイテムキーをもとに、該当するグループとアイテムにアクティブを設定する アクティブ設定された項目がフロントエンドでアクティブ表示されることを期待する。
+   *
+   * @param groupKey String
+   * @param itemKey String
+   */
+  public void setActive(String groupKey, String itemKey) {
+    resetActive();
+    sidebarGroup.stream().forEach(sidebarGroup -> {
+      if (groupKey.equals(sidebarGroup.key)) {
+        sidebarGroup.setActive(true);
+        sidebarGroup.getSidebarItem().forEach(sidebarItem -> {
+          if (itemKey.equals(sidebarItem.key)) {
+            sidebarItem.setActive(true);
+          }
+        });
       }
     });
   }
 
   /**
-   * setActive.
+   * リセットアクティブ.<br/>
+   * すべてのサイドバーアイテムのアクティブをfalseにする
    *
-   * @param groupName String
-   * @param itemName String
    */
-  public void setActive(String groupName, String itemName) {
+  private void resetActive() {
     sidebarGroup.stream().forEach(sidebarGroup -> {
-      if (groupName.equals(sidebarGroup.name)) {
-        sidebarGroup.setActive(true);
-        sidebarGroup.getSidebarItem().forEach(sidebarItem -> {
-          if (itemName.equals(sidebarItem.name)) {
-            sidebarItem.setActive(true);
-          } else {
-            sidebarItem.setActive(false);
-          }
-        });
-      } else {
-        sidebarGroup.setActive(false);
-      }
+      sidebarGroup.setActive(false);
+      sidebarGroup.getSidebarItem().forEach(sidebarItem -> {
+        sidebarItem.setActive(false);
+      });
     });
   }
 

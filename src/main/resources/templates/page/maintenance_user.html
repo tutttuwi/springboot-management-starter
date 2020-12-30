@@ -1,0 +1,257 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.ort/extras/spring-security"
+  th:with="title=ユーザ登録・編集">
+<head
+  th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
+<meta charset="UTF-8" />
+<!-- <link rel="stylesheet" th:href="@{/css/page/maintenance_user.css}" /> -->
+<!--/* <script type="text/javascript" th:src="@{/js/datepicker.js}"></script> */-->
+</head>
+<body class="sidebar-mini accent-primary">
+  <div class="wrapper">
+    <!--/* ヘッダー領域
+    ============================== */-->
+    <th:block th:replace="parts/main_header.html::content"></th:block>
+    <!--/* サイドバー領域
+    ============================== */-->
+    <th:block th:replace="parts/main_sidebar.html::content"></th:block>
+    <!--/* コンテンツ領域
+    ============================== */-->
+    <div class="content-wrapper">
+      <!--/* コンテンツヘッダー
+      ============================== */-->
+      <th:block th:replace="parts/common.html::content_header(${title})"></th:block>
+      <!--/* コンテンツボディ
+      ============================== */-->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- /* 検索フォーム
+          ==============================*/ -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">ユーザ検索</h3>
+                </div>
+                <form name="searchForm" onSubmit="console.log('when submitting, do something');return false;">
+                  <div class="card-body">
+                    <!-- /* 入力項目
+                      ==============================*/ -->
+                    <div class="row">
+                      <!-- /* 氏名
+                        ==============================*/ -->
+                      <div class="form-group col-md-5 offset-md-1">
+                        <div class="row">
+                          <div
+                            class="col-md-3 d-md-flex align-items-center justify-content-end">
+                            <label class="m-0" for="username">氏名</label>
+                          </div>
+                          <div class="col-md-9">
+                            <input type="text"
+                              class="form-control form-control-border"
+                              id="username" placeholder="姓　名">
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /* ユーザID
+                        ==============================*/ -->
+                      <div class="form-group col-md-5">
+                        <div class="row">
+                          <div
+                            class="col-md-3 d-md-flex align-items-center justify-content-end">
+                            <label class="m-0" for="userid">ユーザID</label>
+                          </div>
+                          <div class="col-md-9">
+                            <input type="text"
+                              class="form-control form-control-border"
+                              id="userid" placeholder="userid">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- /* 電話番号
+                        ==============================*/ -->
+                      <div class="form-group col-md-5 offset-md-1">
+                        <div class="row">
+                          <div
+                            class="col-md-3 d-md-flex align-items-center justify-content-end">
+                            <label class="m-0" for="telno">電話番号</label>
+                          </div>
+                          <div class="col-md-9">
+                            <input type="tel"
+                              class="form-control form-control-border"
+                              id="telno" placeholder="090-1111-1111">
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /* メールアドレス
+                        ==============================*/ -->
+                      <div class="form-group col-md-5">
+                        <div class="row">
+                          <div
+                            class="col-md-3 d-md-flex align-items-center justify-content-end">
+                            <label class="m-0" for="emailaddr">メール</label>
+                          </div>
+                          <div class="col-md-9">
+                            <input type="email"
+                              class="form-control form-control-border"
+                              id="emailaddr"
+                              placeholder="test@example.com">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="card-footer d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary">検索</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+          <th:block th:if="false">
+            <!-- /* 検索結果表示
+            ==============================*/ -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-secondary">
+                  <div class="card-header">
+                    <h3 class="card-title">検索結果</h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="example1_wrapper"
+                      class="dataTables_wrapper dt-bootstrap4">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <table id="example1"
+                            class="table table-bordered table-striped dataTable dtr-inline"
+                            role="grid"
+                            aria-describedby="search_user_info">
+                            <thead>
+                              <tr role="row">
+                                <th class="sorting" tabindex="0"
+                                  aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="氏名"
+                                  aria-sort="ascending">氏名</th>
+                                <th class="sorting" tabindex="0"
+                                  aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="userId">ユーザID</th>
+                                <th class="sorting" tabindex="0"
+                                  aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="tel">電話番号</th>
+                                <th class="sorting" tabindex="0"
+                                  aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="emailaddr">メール</th>
+                                <th class="sorting" tabindex="0"
+                                  aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="createdt">作成日時</th>
+                                <th class="sorting" tabindex="0"
+                                  aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="updatedt">更新日時</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr role="row" class="odd">
+                                <td class="sorting_1 dtr-control"
+                                  tabindex="0">KHTML</td>
+                                <td class="">Konqureror 3.5</td>
+                                <td>KDE 3.5</td>
+                                <td>3.5</td>
+                                <td>A</td>
+                                <td>A</td>
+                              </tr>
+                              <tr role="row" class="even">
+                                <td class="sorting_1 dtr-control"
+                                  tabindex="0">KHTML</td>
+                                <td class="">Konqureror 3.3</td>
+                                <td>KDE 3.3</td>
+                                <td>3.3</td>
+                                <td>A</td>
+                                <td>A</td>
+                              </tr>
+                              <tr role="row" class="odd">
+                                <td class="sorting_1 dtr-control"
+                                  tabindex="0">KHTML</td>
+                                <td class="">Konqureror 3.1</td>
+                                <td>KDE 3.1</td>
+                                <td>3.1</td>
+                                <td>C</td>
+                                <td>A</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </th:block>
+
+
+
+        </div>
+      </section>
+
+    </div>
+    <!--/* フッター領域
+    ============================== */-->
+    <th:block th:replace="parts/main_footer.html::content"></th:block>
+    <!--/* コントロールサイドバー領域
+    ============================== */-->
+    <th:block th:replace="parts/control_sidebar.html::content"></th:block>
+  </div>
+  <th:block th:include="parts/common::end_script"></th:block>
+  <!--   <script th:src="@{/js/page/maintenance_user.js}"></script> -->
+  <script type="text/javascript">
+      $(function() {
+        $("#example1").DataTable({
+          "responsive" : true,
+          "lengthChange" : false,
+          "autoWidth" : false,
+          "buttons" : [ {
+            extend : 'copy',
+            text : 'コピー'
+          }, {
+            extend : 'csv',
+            text : 'CSV出力'
+          }, {
+            extend : 'print',
+            text : '印刷'
+          }, {
+            extend : 'colvis',
+            text : '表示カラム'
+          } ],
+          "language" : {
+            "processing" : "処理中・・・",
+            "info" : " _TOTAL_ 件中 _START_ 件から _END_ 件まで表示",
+            "emptyTable" : "該当するデータがありませんでした。",
+            "zeroRecords" : "絞り込んだ結果該当するデータがありませんでした。",
+            "search" : "検索",
+            "paginate" : {
+              "first" : "先頭",
+              "previous" : "前",
+              "next" : "次",
+              "last" : "最後"
+            }
+          // 日本語化対応 ここで取得したJSON通りに設定が上書きされる。個別設定したければ別途記述していく
+          //"url" : "//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Japanese.json"
+          },
+        //dom: 'B<"clear">lfrtip',
+        //buttons: [ 'copy', 'csv', 'excel' ]
+        // pdf,excelは日本語文字がもじバケる,CSVもBom付きでダウンロードできない
+        // "buttons" : [ "copy", "csv", "excel", "pdf", "print", "colvis" ]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      });
+    </script>
+</body>
+</html>

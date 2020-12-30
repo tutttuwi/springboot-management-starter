@@ -1,12 +1,12 @@
 package me.tutttuwi.springboot.management.controller;
 
-import static me.tutttuwi.springboot.management.constant.WebConst.*;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
+import me.tutttuwi.springboot.management.constant.WebConst;
 import me.tutttuwi.springboot.management.util.Authorizable;
 import me.tutttuwi.springboot.management.util.FunctionNameAware;
 
@@ -29,7 +29,7 @@ public abstract class AbstractUiController extends BaseController
    * @return
    */
   public boolean hasErrors(Model model) {
-    val errors = model.asMap().get(MAV_ERRORS);
+    val errors = model.asMap().get(WebConst.MAV_ERRORS);
 
     if (errors != null && errors instanceof BeanPropertyBindingResult) {
       val br = ((BeanPropertyBindingResult) errors);
@@ -49,6 +49,6 @@ public abstract class AbstractUiController extends BaseController
    * @param result result
    */
   public void setFlashAttributeErrors(RedirectAttributes attributes, BindingResult result) {
-    attributes.addFlashAttribute(MAV_ERRORS, result);
+    attributes.addFlashAttribute(WebConst.MAV_ERRORS, result);
   }
 }

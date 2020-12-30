@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import lombok.extern.slf4j.Slf4j;
+import me.tutttuwi.springboot.management.constant.MsgConst;
 import me.tutttuwi.springboot.management.dao.AccountIndivRepository;
 import me.tutttuwi.springboot.management.dao.AccountInfoRepository;
 import me.tutttuwi.springboot.management.dto.SidebarModel;
@@ -85,7 +86,7 @@ public class AccountUserDetailsService implements UserDetailsService {
     AccountIndiv accountIndiv =
         accountIndivDao.selectByAccountId(userDetails.getAccount().getAccountId());
     if (Objects.isNull(accountIndiv)) {
-      log.error(MessageUtils.getMsg("ERROR.USER.NOT_FOUND"));
+      log.error(MessageUtils.getMsg(MsgConst.ERROR_DATA_NOT_FOUND.KEY));
     }
     return accountIndiv;
   }
@@ -108,7 +109,7 @@ public class AccountUserDetailsService implements UserDetailsService {
     Gson gson = new Gson();
     SidebarModel sidebarModel = gson.fromJson(jsr, SidebarModel.class);
     // sidebarModel.setActive("ダッシュボード");
-    sidebarModel.setActive("ダッシュボード", "ダッシュボード１");
+    // sidebarModel.setActive("ダッシュボード", "ダッシュボード１");
     return sidebarModel;
   }
 

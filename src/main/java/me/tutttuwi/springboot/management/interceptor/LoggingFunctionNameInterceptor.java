@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
-import me.tutttuwi.springboot.management.constant.WebConst;
+import me.tutttuwi.springboot.management.constant.MdcConst;
 import me.tutttuwi.springboot.management.util.FunctionNameAware;
 
 /**
@@ -13,8 +13,6 @@ import me.tutttuwi.springboot.management.util.FunctionNameAware;
  */
 @Slf4j
 public class LoggingFunctionNameInterceptor extends BaseHandlerInterceptor {
-
-  private static final String MDC_FUNCTION_NAME = WebConst.MDC_FUNCTION_NAME;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -24,7 +22,7 @@ public class LoggingFunctionNameInterceptor extends BaseHandlerInterceptor {
     val fna = getBean(handler, FunctionNameAware.class);
     if (fna != null) {
       val functionName = fna.getFunctionName();
-      MDC.put(MDC_FUNCTION_NAME, functionName);
+      MDC.put(MdcConst.MDC_FUNCTION_NAME.KEY, functionName);
     }
 
     return true;

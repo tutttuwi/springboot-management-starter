@@ -17,5 +17,5 @@ logging:
     root: INFO
 #    com: debug
 #    org: debug
-#    org.springframework: DEBUG
+    org.springframework: DEBUG
     

@@ -1,6 +1,7 @@
 {
 	"sidebar-group": [
 		{
+			"key": "dashboard",
 			"name": "ダッシュボード",
 			"icon": "nav-icon fas fa-tachometer-alt",
 			"clazz": "",
@@ -8,6 +9,7 @@
 			"active": false,
 			"sidebar-item": [
 				{
+					"key": "dashboard1",
 					"name": "ダッシュボード１",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
@@ -15,6 +17,7 @@
 					"active": false
 				},
 				{
+					"key": "dashboard2",
 					"name": "ダッシュボード２",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
@@ -24,6 +27,7 @@
 			]
 		},
 		{
+			"key": "maintenance",
 			"name": "メンテナンス",
 			"icon": "nav-icon fas fa-fan",
 			"clazz": "",
@@ -31,6 +35,7 @@
 			"active": false,
 			"sidebar-item": [
 				{
+					"key": "maintenance_user",
 					"name": "ユーザ登録・編集",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
@@ -38,6 +43,7 @@
 					"active": false
 				},
 				{
+					"key": "maintenance_menu",
 					"name": "メニュー追加・編集",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
@@ -47,6 +53,7 @@
 			]
 		},
 		{
+			"key": "settings",
 			"name": "個人設定",
 			"icon": "nav-icon fas fa-user-edit",
 			"clazz": "",
@@ -54,6 +61,7 @@
 			"active": false,
 			"sidebar-item": [
 				{
+					"key": "account_info",
 					"name": "アカウント情報",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
@@ -61,6 +69,7 @@
 					"active": false
 				},
 				{
+					"key": "password_change",
 					"name": "パスワード変更",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",

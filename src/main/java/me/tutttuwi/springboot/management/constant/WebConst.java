@@ -1,43 +1,10 @@
 package me.tutttuwi.springboot.management.constant;
 
 /**
- * 定数定義
+ * 定数定義. <br/>
+ * interfaceの定数なので暗黙的にpublic static final宣言
  */
 public interface WebConst {
-
-  /** ---- MDC. ---- **/
-  String MDC_LOGIN_USER_ID = "LOGIN_USER_ID";
-
-  String MDC_FUNCTION_NAME = "FUNCTION_NAME";
-
-  /** ---- Message. ---- **/
-  String GLOBAL_MESSAGE = "GlobalMessage";
-
-  String VALIDATION_ERROR = "ValidationError";
-
-  String OPTIMISTIC_LOCKING_FAILURE_ERROR = "OptimisticLockingFailureError";
-
-  String DOUBLE_SUBMIT_ERROR = "DoubleSubmitError";
-
-  String NO_DATA_FOUND_ERROR = "NoDataFoundError";
-
-  String UNEXPECTED_ERROR = "UnexpectedError";
-
-  String MESSAGE_DELETED = "Deleted";
-
-  String MESSAGE_SUCCESS = "Success";
-
-  /** ---- View. ---- **/
-  String ERROR_VIEW = "error";
-
-  String NOTFOUND_VIEW = "notfound";
-
-  String FORBIDDEN_VIEW = "forbidden";
-
-  /** ---- DateFormat. ---- **/
-  String LOCALDATE_FORMAT = "yyyy/MM/dd";
-
-  String LOCALDATETIME_FORMAT = "yyyy/[]M/[]d []H:[]m:[]s";
 
   /** ---- ViewComponents. ---- **/
   String MAV_CONST = "Const";
@@ -48,22 +15,32 @@ public interface WebConst {
 
   String MAV_CODE_CATEGORIES = "CodeCategories";
 
-  /** ---- URLs. ---- **/
+  // ---- URLs. ----
   String HOME_URL = "/";
 
-  String ERROR_URL = "/error";
+  String ERROR_URL_ROOT = "/error";
 
-  String NOTFOUND_URL = "/notfound";
+  String ERROR_URL = "/error/500";
 
-  String FORBIDDEN_URL = "/forbidden";
+  String NOTFOUND_URL = "/error/404";
+
+  String FORBIDDEN_URL = "/error/403";
 
   String LOGIN_URL = "/login";
 
+  /** SpringFramework認証処理用. */
   String LOGIN_PROCESSING_URL = "/authenticate";
 
+  /** SpringFramework認証成功処理用. */
   String LOGIN_SUCCESS_URL = "/loginSuccess";
 
-  String LOGIN_FAILURE_URL = "/loginFailure";
+  String PAGE = "page";
+  String PAGE_URL = "/page";
+
+  /**
+   * ログイン認証失敗時のURL. (GETでerrorパラメータを渡す)
+   */
+  String LOGIN_FAILURE_URL = "/login?error";
 
   String LOGIN_TIMEOUT_URL = "/loginTimeout";
 
@@ -80,4 +57,10 @@ public interface WebConst {
   String STATIC_RESOURCES_URL = "/static/**";
 
   String API_BASE_URL = "/api/**";
+
+  // FUNCTION NAMEs
+  String FNC_MENU = "F_MEMU";
+  String FNC_DASHBOARD = "F_DASHBORD";
+  String FNC_MAINTENANCE = "F_MAINTENANCE";
+
 }

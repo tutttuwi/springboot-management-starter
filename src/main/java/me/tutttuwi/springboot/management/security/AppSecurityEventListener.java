@@ -84,7 +84,7 @@ public class AppSecurityEventListener {
    */
   @EventListener
   public void handleInteractiveAuthenticationSuccess(InteractiveAuthenticationSuccessEvent event) {
-    //
+    // 認証が成功した場合、ログイン後のページで使用するための認証ユーザ情報をセッションに格納
     try {
       AccountUserDetails userDetails =
           (AccountUserDetails) event.getAuthentication().getPrincipal();
