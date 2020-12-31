@@ -5,6 +5,15 @@
  * 記述したあとに、具体的なコンストラクタ処理は<code>prototype</code>に実装します。 reference:
  * http://blog.livedoor.jp/aki_mana/archives/2383135.html
  *
+ * <p>
+ * 実装規約
+ * <p>
+ * <ul>
+ * <li>Common内に実装する状態を持つクラスはNewして使用すること。Utilなど静的な関数のみを保持するものはNewせずに使用させる。</li>
+ * <li>クラス内のprivateメソッドは先頭に_(アンダースコア)を付与すること。利用側で制限を強制できないため。</li>
+ * <li>第三者に意図が伝わるようなJSDocコメントを付与すること</li>
+ * </ul>
+ *
  */
 
 (function(window, Common) {
@@ -17,34 +26,32 @@
 	let global = {};
 
 	/**
-	 * ユーティリティクラス.
+	 * ユーティリティオブジェクト.
 	 *
-	 * @type {function}
+	 * @type {Object}
 	 */
-	Common.Util = function() {
-		this.initialize.apply(this, arguments);
-	}
-	Common.Util.prototype = {
-		/**
-		 * コンストラクタ.
-		 *
-		 * @param args
-		 *          {object} 引数
-		 */
-		initialize : function(args) {
-		},
-
+	Common.Util = {
 		/**
 		 * ゼロパディング関数.
 		 *
 		 * @param NUM
-		 *          {Number} ゼロパディングしたい数値
+		 *          [{Number}|{string}] ゼロパディングしたい数値・文字列
 		 * @param LEN
 		 *          {Number} ゼロパディングの桁数
 		 */
 		zeroPadding : function(NUM, LEN) {
 			return (Array(LEN).join('0') + NUM).slice(-LEN);
-		}
+		},
+
+		/**
+		 * トーストオブジェクト.
+		 */
+		toast : Swal.mixin({
+			toast : true,
+			position : 'top-end',
+			showConfirmButton : false,
+			timer : 3000
+		})
 	}
 
 	/**
@@ -67,26 +74,55 @@
 			this.loadingId = loadingId;
 		},
 
-		showLoading : function() {
-			let el = document.querySelector("#"+this.loadingId) || document.querySelector("body");
+		_showLoading : function() {
+			let el = document.querySelector("#" + this.loadingId)
+					|| document.querySelector("body");
 			let divEl = document.createElement("div");
 			let iEl = document.createElement("i");
 			divEl.id = 'apiloading';
-			divEl.classList.add("d-flex", "align-items-center", "justify-content-center", "w-100", "h-100", "position-absolute");
+			divEl.classList.add("d-flex", "align-items-center",
+					"justify-content-center", "w-100", "h-100", "position-absolute");
 			divEl.style.display = 'none';
 			divEl.style.top = '0px';
 			divEl.style.left = '0px';
 			divEl.style.background = 'rgb(200,200,200,0.5)';
-			iEl.classList.add("fas","fa-sync","fa-spin","fa-5x");
+			iEl.classList.add("fas", "fa-sync", "fa-spin", "fa-5x");
 			divEl.appendChild(iEl);
 			el.appendChild(divEl);
 			$('#apiloading').fadeIn(500);
 		},
-		hideLoading : function() {
-			$('#apiloading').fadeOut(500,function(){
+		_hideLoading : function() {
+			$('#apiloading').fadeOut(500, function() {
 				$(this).remove();
 			});
 		},
+
+		/**
+		 * 共通パラメータ生成関数.<br/> 共通パラメータをここで定義してリクエストデータ以外を共通で設定する。
+		 * 必要に応じてセッション領域などから共通パラメータを取得して設定する。
+		 */
+		_createParamData : function(data) {
+			const header = {
+			// deviceType: 'xxx',
+			// browserType: 'xxx',
+			// system: 'xxx',
+			}
+			data = Object.assign(header, data);
+			return data;
+		},
+
+		/**
+		 * パラメータチェック処理.<br/> リクエストするパラメータとして許容しない型が設定されていた場合、エラーをスローします。
+		 */
+		_checkParam : function(data) {
+			Object.keys(data).forEach(key=>{
+				const acceptTypes = ["string", "number"];
+			  if(!~acceptTypes.indexOf(typeof data[key])){
+			  	throw new Error("パラメータエラー！" + "プロパティ：" + key + " 値：" + data[key]);
+			  }
+			});
+		},
+
 
 		/**
 		 * 【GET】APIリクエスト関数(同期処理).
@@ -95,35 +131,45 @@
 		 *          {Object} リクエスト設定オブジェクト
 		 */
 		doGet : function(reqUserSetting) {
+			const self = this;
 			// LOADING START
-			this.showLoading();
+			self._showLoading();
 			let ret = {};
-			let reqDefault = {
-					url: undefined,
-					type: 'GET',
-					dataType: 'json',
-					data: undefined,
-					timeout: 10000,
-					async: false
-			}
-			let req = Object.assign(reqDefault, reqUserSetting);
-			$.ajax(req).done(function(data, textStatus, jqXHR) {
-				ret.data = data;
-				ret.textStatus = textStatus;
-				if (jqXHR.status === 200) {
-					ret.isOk = true;
-				} else {
-					ret.isOk = false;
+			try {
+				// ユーザ設定データに共通設定適用
+				reqUserSetting.url = GLOBAL.API_CONTEXT_PATH + reqUserSetting.url;
+				reqUserSetting.data = self._createParamData(reqUserSetting.data);
+				const reqDefault = {
+					url : undefined,
+					type : 'GET',
+					dataType : 'json',
+					data : undefined,
+					timeout : 10000,
+					async : false
 				}
-			}).fail(function(jqXHR, textStatus, errorThrown){
-				ret.data = data;
-				ret.textStatus = textStatus;
-				ret.isOk = false;
-				ret.errorThrown = errorThrown;
-			}).always(function(){
-				// LOADING END
-				this.hideLoading();
-			});
+				let req = Object.assign(reqDefault, reqUserSetting);
+				console.log(req);
+				// API呼び出し
+				$.ajax(req).done(function(data, textStatus, jqXHR) {
+					ret.data = data;
+					ret.textStatus = textStatus;
+					if (jqXHR.status === 200) {
+						ret.isOk = true;
+					} else {
+						ret.isOk = false;
+					}
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+					ret.textStatus = textStatus;
+					ret.isOk = false;
+					ret.errorThrown = errorThrown;
+				}).always(function() {
+					// LOADING END
+				});
+			} catch(err) {
+				console.error(err);
+			} finally {
+				self._hideLoading();
+			}
 			return ret;
 		},
 

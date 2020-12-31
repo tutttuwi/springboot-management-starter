@@ -282,6 +282,8 @@ dependencies {
 	compile group: 'org.webjars', name: 'webjars-locator-core', version: '0.45'
 	compile 'org.webjars:AdminLTE:3.0.5'
     compile 'org.webjars.npm:particlesjs:2.2.3'
+    compile group: 'org.webjars.bowergithub.borismoore', name: 'jsrender', version: '1.0.5'
+
 
 	// デフォルトではシャットダウンを除く全てのエンドポイントが有効になる
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator

@@ -45,6 +45,11 @@
 <link rel="stylesheet"
   th:href="@{/webjars/AdminLTE/3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
 
+<!-- トースト -->
+<link rel="stylesheet"
+  th:href="@{/webjars/AdminLTE/3.0.5/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css}">
+<link rel="stylesheet"
+  th:href="@{/webjars/AdminLTE/3.0.5/plugins/toastr/toastr.min.css}">
 
 
 
@@ -112,6 +117,9 @@
 
     <!-- パーティクル背景表示用 -->
     <script th:src="@{/webjars/particlesjs/2.2.3/dist/particles.min.js}"></script>
+    <!-- 画面レンダリング用 -->
+    <script th:src="@{/webjars/jsrender/jsrender.min.js}"></script>
+
 
     <!-- Datatables -->
     <script
@@ -139,6 +147,14 @@
     <script
       th:src="@{/webjars/AdminLTE/3.0.5/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
 
+    <!-- トースト -->
+    <script
+      th:src="@{/webjars/AdminLTE/3.0.5/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script
+      th:src="@{/webjars/AdminLTE/3.0.5/plugins/toastr/toastr.min.js}"></script>
+
+    <!-- 個別定義処理 -->
+    <script th:src="@{/js/const.js}"></script>
     <script th:src="@{/js/common.js}"></script>
 
   </th:block>

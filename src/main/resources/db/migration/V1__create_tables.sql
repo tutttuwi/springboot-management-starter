@@ -1,5 +1,5 @@
--- DROP TABLES
 /**
+-- DROP TABLES
 drop table if exists dev.account_connection;
 drop table if exists  dev.account_email;
 drop table if exists  dev.account_history;
@@ -10,9 +10,9 @@ drop table if exists  dev.numbering;
 drop table if exists  dev.flyway_schema_history;
 
 -- DROP SCHEMA
-drop schema if exists dev;
+-- drop schema if exists dev;
 
-**/
+*/
 
 -- CREATE DATABASE
 -- create schema dev;
