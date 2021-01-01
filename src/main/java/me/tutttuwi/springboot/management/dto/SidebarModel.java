@@ -1,12 +1,13 @@
 package me.tutttuwi.springboot.management.dto;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class SidebarModel {
+public class SidebarModel implements Serializable {
 
   @SerializedName("sidebar-group")
   @Expose

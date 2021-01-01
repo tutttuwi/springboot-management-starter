@@ -1,5 +1,6 @@
 package me.tutttuwi.springboot.management.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import org.seasar.doma.Entity;
 import org.seasar.doma.Id;
@@ -9,7 +10,7 @@ import lombok.Data;
 @Data()
 @Entity(naming = NamingType.SNAKE_UPPER_CASE)
 // @Table(name = "user_idpw")
-public class AccountInfo {
+public class AccountInfo implements Serializable {
 
   /** AccountID. */
   @Id

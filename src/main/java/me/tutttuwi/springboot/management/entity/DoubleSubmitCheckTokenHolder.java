@@ -21,7 +21,7 @@ public class DoubleSubmitCheckTokenHolder {
   }
 
   /**
-   * セッションに保存されていたトークンを返します。
+   * セッションに保存されていたトークンを返します.
    *
    * @return
    */
@@ -30,7 +30,7 @@ public class DoubleSubmitCheckTokenHolder {
   }
 
   /**
-   * 画面から渡ってきたトークンを返します。
+   * 画面から渡ってきたトークンを返します.
    *
    * @return
    */
@@ -39,7 +39,7 @@ public class DoubleSubmitCheckTokenHolder {
   }
 
   /**
-   * 監査情報をクリアします。
+   * 監査情報をクリアします.
    */
   public static void clear() {
     EXPECTED_TOKEN.remove();

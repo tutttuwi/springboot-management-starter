@@ -1,4 +1,4 @@
-/**
+/*
 -- DROP TABLES
 drop table if exists dev.account_connection;
 drop table if exists  dev.account_email;
@@ -14,8 +14,10 @@ drop table if exists  dev.flyway_schema_history;
 
 */
 
+/*
 -- CREATE DATABASE
--- create schema dev;
+create schema dev;
+*/
 
 --------------------------------------------------------------------------------
 -- Table : dev.account_connection

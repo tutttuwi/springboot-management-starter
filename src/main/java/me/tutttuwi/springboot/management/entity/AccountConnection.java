@@ -1,5 +1,6 @@
 package me.tutttuwi.springboot.management.entity;
 
+import java.io.Serializable;
 import org.seasar.doma.Entity;
 import org.seasar.doma.jdbc.entity.NamingType;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.Data;
 @Data()
 @Entity(naming = NamingType.SNAKE_UPPER_CASE)
 // @Table(name = "user_idpw")
-public class AccountConnection {
+public class AccountConnection implements Serializable {
 
   /** AccountID. */
   // @Id

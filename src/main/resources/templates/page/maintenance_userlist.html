@@ -5,7 +5,7 @@
 <head
   th:replace="parts/common :: meta_header(${title},~{::link},~{::script})">
 <meta charset="UTF-8" />
-<!-- <link rel="stylesheet" th:href="@{/css/page/maintenance_user.css}" /> -->
+<!-- <link rel="stylesheet" th:href="@{/css/page/maintenance_userlist.css}" /> -->
 <!--/* <script type="text/javascript" th:src="@{/js/datepicker.js}"></script> */-->
 </head>
 <body class="sidebar-mini accent-primary">
@@ -159,7 +159,7 @@
     <th:block th:replace="parts/control_sidebar.html::content"></th:block>
   </div>
   <th:block th:include="parts/common::end_script"></th:block>
-  <script th:src="@{/js/page/maintenance_user.js}"></script>
+  <script th:src="@{/js/page/maintenance_userlist.js}"></script>
   <script id="theadTemplate" type="text/x-jsrender">
                             <tr role="row">
                               {{for thList}}

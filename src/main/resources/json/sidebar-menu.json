@@ -35,19 +35,19 @@
 			"active": false,
 			"sidebar-item": [
 				{
-					"key": "maintenance_user",
-					"name": "ユーザ登録・編集",
+					"key": "maintenance_userlist",
+					"name": "ユーザ一覧検索",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
-					"link": "/springboot-admin-management/maintenance/user",
+					"link": "/springboot-admin-management/maintenance/userlist",
 					"active": false
 				},
 				{
-					"key": "maintenance_menu",
-					"name": "メニュー追加・編集",
+					"key": "maintenance_userregedit",
+					"name": "ユーザ登録",
 					"icon": "far fa-circle nav-icon",
 					"clazz": "",
-					"link": "/springboot-admin-management/maintenance/menu",
+					"link": "/springboot-admin-management/maintenance/userregedit",
 					"active": false
 				}
 			]

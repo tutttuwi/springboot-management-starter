@@ -62,8 +62,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
   private static final String[] STATIC_PERMIT_PATH =
       {"/", "/login", "/user/**", "/auth/**", "/error/**", "^/actuator.*" // Actuatorの定義追加
       };
-  private static final String[] STATIC_RESOURCES =
-      {"/**/favicon.ico", "/css/**", "/js/**", "/img/**", "/lib/**", "/font/**", "/webjars/**"};
+  private static final String[] STATIC_RESOURCES = {"/**/favicon.ico", "/css/**", "/js/**",
+      "/img/**", "/lib/**", "/font/**", "/webjars/**", "/h2-console/**"};
 
   @Autowired
   UserDetailsService userDetailsService;

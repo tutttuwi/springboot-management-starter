@@ -40,7 +40,7 @@ UserList.prototype = {
 
 		$("#theadRender").html($("#theadTemplate").render({
 			thList : [ {
-				label : "編集"
+				label : ""
 			}, {
 				label : "名前(姓)"
 			}, {

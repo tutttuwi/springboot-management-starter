@@ -1,5 +1,6 @@
 package me.tutttuwi.springboot.management.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import org.seasar.doma.Entity;
 import org.seasar.doma.Id;
@@ -8,7 +9,7 @@ import lombok.Data;
 
 @Data()
 @Entity(naming = NamingType.SNAKE_UPPER_CASE)
-public class AuthKey {
+public class AuthKey implements Serializable {
 
   /** Eメール認証キー. */
   @Id

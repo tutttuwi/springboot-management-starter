@@ -1,11 +1,12 @@
 package me.tutttuwi.springboot.management.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * 監査情報ホルダー
  */
-public class AuditInfoHolder {
+public class AuditInfoHolder implements Serializable {
 
   private static final ThreadLocal<String> AUDIT_USER = new ThreadLocal<>();
 
