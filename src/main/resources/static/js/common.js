@@ -182,6 +182,23 @@
 		doGetAsync : function(req, callback) {
 
 		}
+	},
+
+	/**
+	 * セッションマネージャ.
+	 *
+	 * @type {Object}
+	 */
+	Common.SSM = {
+			get: function(key) {
+				return sessionStorage.getItem(key);
+			},
+			set: function(key,val) {
+				sessionStorage.setItem(key,val);
+			},
+			remove: function(key) {
+				sessionStorage.removeItem(key);
+			}
 	}
 
 })(window, window.Common || {});

@@ -59,7 +59,6 @@ public class AppMaintenanceUiController extends AbstractUiController {
   @GetMapping(value = "/{path}")
   public String maintenance(@PathVariable("path") String path) throws Throwable {
     String itemKey = PAGE_NAME + "_" + path;
-    commonSession.getSidebarModel().setActive(PAGE_NAME, itemKey);
     return WebConst.PAGE_URL + "/" + itemKey;
   }
 
@@ -71,7 +70,6 @@ public class AppMaintenanceUiController extends AbstractUiController {
    */
   @GetMapping(value = "/userregedit")
   public String userRegEdit(SignUpUserFormRequest inputForm) throws Throwable {
-    commonSession.getSidebarModel().setActive(PAGE_NAME, "maintenance_userregedit");
     StringBuilder sb = new StringBuilder();
     return sb.append(WebConst.PAGE_URL).append("/").append("maintenance_userregedit").toString();
   }

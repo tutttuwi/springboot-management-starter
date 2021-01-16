@@ -29,34 +29,7 @@
         </div>
 
         <!-- Sidebar Menu -->
-        <nav class="mt-2"
-          th:each="sidebarGroup : ${commonSession.sidebarModel.sidebarGroup}">
-          <ul class="nav nav-pills nav-sidebar flex-column"
-            data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item has-treeview" th:classappend="${sidebarGroup.active ? 'menu-open' : ''}"><a
-              th:href="${sidebarGroup.link}" class="nav-link" th:classappend="${sidebarGroup.active ? 'active' : ''}">
-                <i th:classappend="${sidebarGroup.icon}"></i>
-                <p>
-                  [[${sidebarGroup.name}]]
-                  <th:block
-                    th:if="${sidebarGroup.sidebarItem.size() > 0}">
-                    <i class="right fas fa-angle-left"></i>
-                  </th:block>
-                </p>
-            </a> <th:block th:if="${sidebarGroup.sidebarItem.size() > 0}">
-                <ul class="nav nav-treeview">
-                  <li
-                    th:each="sidebarItem : ${sidebarGroup.sidebarItem}"
-                    class="nav-item"><a
-                    th:href="${sidebarItem.link}"
-                    class="nav-link"  th:classappend="${sidebarItem.active ? 'active' : ''}"> <i
-                      th:classappend="${sidebarItem.icon}"></i>
-                      <p>[[${sidebarItem.name}]]</p>
-                  </a></li>
-                </ul></li>
-            </th:block>
-          </ul>
-        </nav>
+        <!-- Created by JSRender -->
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->

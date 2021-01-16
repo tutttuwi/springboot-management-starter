@@ -157,6 +157,57 @@
     <script th:src="@{/js/const.js}"></script>
     <script th:src="@{/js/common.js}"></script>
 
+    <!-- サイドメニュー描画処理 -->
+    <script id="sidebarTemplate" type="text/x-jsrender">
+        {{for sidebarGroup}}
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item has-treeview {{if active}}menu-open{{/if}}">
+              <a href="{{:link}}" class="nav-link {{if active}}active{{/if}}">
+                <i class="{{:icon}}"></i>
+                <p>
+                  {{:name}}
+                  {{if sidebarItem && sidebarItem.length}}
+                    <i class="right fas fa-angle-left"></i>
+                  {{/if}}
+                </p>
+              </a>
+              {{if sidebarItem && sidebarItem.length}}
+                <ul class="nav nav-treeview">
+                  {{for sidebarItem}}
+                  <li class="nav-item">
+                    <a href="{{:link}}" class="nav-link {{if active}}active{{/if}}">
+                      <i class="{{:icon}}"></i>
+                      <p>{{:name}}</p>
+                    </a>
+                  </li>
+                  {{/for}}
+                </ul>
+              {{/if}}
+              </li>
+          </ul>
+        </nav>
+        {{/for}}
+    </script>
+    <script type="text/javascript">
+    // セッションからJSONが取得できた場合はセッションの値を取得。初期表示時のみ定数から取得
+    let SIDE_MENU_JSON = Common.SSM.get(GLOBAL.SS_KEY.SIDE_MENU);
+    SIDE_MENU_JSON = SIDE_MENU_JSON ? SIDE_MENU_JSON : GLOBAL.MENU_JSON;
+    console.log(SIDE_MENU_JSON);
+    if ($(".sidebar")) {
+      console.log("sidebar exist!!")
+      $(".sidebar").append($("#sidebarTemplate").render(SIDE_MENU_JSON));
+    }
+    // アクティブ制御
+    $(".nav-link").click(function(e) {
+      console.log(e.target);
+      e.target.querySelector('p').textContent;
+      if (e.target.href != "#") {
+
+      }
+    });
+    </script>
   </th:block>
 </body>
 </html>

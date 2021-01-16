@@ -40,7 +40,6 @@ public class AppMenuUiController extends AbstractUiController {
    */
   @GetMapping(value = "/menu")
   public String menu(@AuthenticationPrincipal AccountUserDetails userDetails) throws Throwable {
-    commonSession.getSidebarModel().setActive("dashboard", "dashboard1");
     return "page/dashboard1";
   }
 

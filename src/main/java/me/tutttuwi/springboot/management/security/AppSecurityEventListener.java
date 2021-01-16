@@ -90,7 +90,6 @@ public class AppSecurityEventListener {
           (AccountUserDetails) event.getAuthentication().getPrincipal();
       AccountIndiv accountIndiv = service.getUserInfo(userDetails);
       commonSession.setUsername(accountIndiv.getLstName() + "　" + accountIndiv.getFstName());
-      commonSession.setSidebarModel(service.getMenuInfo());
     } catch (Throwable tw) {
       tw.printStackTrace();
     }
