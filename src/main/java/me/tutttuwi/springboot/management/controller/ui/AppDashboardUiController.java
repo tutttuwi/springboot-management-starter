@@ -40,7 +40,7 @@ public class AppDashboardUiController extends AbstractUiController {
   @GetMapping(value = "/{path}")
   public String dashboard(@PathVariable("path") String path) throws Throwable {
     commonSession.getSidebarModel().setActive(PAGE_NAME, path);
-    return WebConst.PAGE_URL + "/" + path;
+    return WebConst.PAGE + "/" + path;
   }
 
   @Override
