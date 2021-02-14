@@ -103,7 +103,7 @@ public class AppMaintenanceUiController extends AbstractUiController {
   public String userRegEditComplete(SignUpUserFormRequest inputForm, BindingResult result)
       throws Throwable {
     if (result.hasErrors()) {
-      return "/maintenance/userregedit";
+      return "maintenance/userregedit";
     }
     signUpUserSession.setSignUpUserFormRequest(inputForm);
     signUpService.registUserInfo(inputForm);

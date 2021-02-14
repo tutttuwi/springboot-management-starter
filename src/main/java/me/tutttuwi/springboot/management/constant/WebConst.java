@@ -20,11 +20,13 @@ public interface WebConst {
 
   String ERROR_URL_ROOT = "/error";
 
-  String ERROR_URL = "/error/500";
+  String ERROR = "error";
 
-  String NOTFOUND_URL = "/error/404";
+  String ERROR_URL = "error/500";
 
-  String FORBIDDEN_URL = "/error/403";
+  String NOTFOUND_URL = "error/404";
+
+  String FORBIDDEN_URL = "error/403";
 
   String LOGIN_URL = "/login";
 

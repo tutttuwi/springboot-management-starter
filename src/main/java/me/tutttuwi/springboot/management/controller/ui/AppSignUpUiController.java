@@ -45,7 +45,7 @@ public class AppSignUpUiController {
   public String index(SignUpUserFormRequest inputForm) throws Throwable { // 必ず初期化用にフォームオブジェクト渡すこと
     System.out
         .println("SignUpUserFormRequest(index):" + signUpUserSession.getSignUpUserFormRequest());
-    return "/user/signup/input_userinfo";
+    return "user/signup/input_userinfo";
   }
 
   /**
@@ -60,10 +60,10 @@ public class AppSignUpUiController {
   public String input(@Validated SignUpUserFormRequest inputForm, BindingResult result)
       throws Throwable {
     if (result.hasErrors()) {
-      return "/user/signup/input_userinfo";
+      return "user/signup/input_userinfo";
     }
     signUpUserSession.setSignUpUserFormRequest(inputForm);
-    return "/user/signup/confirm_userinfo";
+    return "user/signup/confirm_userinfo";
   }
 
   /**
@@ -93,7 +93,7 @@ public class AppSignUpUiController {
     sessionStatus.setComplete();
     System.out.println(
         "SignUpUserFormRequest(after complete):" + signUpUserSession.getSignUpUserFormRequest());
-    return "/user/signup/complete_userinfo";
+    return "user/signup/complete_userinfo";
   }
 
   /**
@@ -107,9 +107,9 @@ public class AppSignUpUiController {
   public String emailauth(@RequestParam(name = "key", required = true) String emailAuthKey)
       throws Throwable {
     if (service.isAuthKeyExpired(emailAuthKey)) {
-      return "/user/signup/warn_emailauthkeyexpired";
+      return "user/signup/warn_emailauthkeyexpired";
     }
     service.activateUserInfo(emailAuthKey);
-    return "/user/signup/complete_useractivated";
+    return "user/signup/complete_useractivated";
   }
 }

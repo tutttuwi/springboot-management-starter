@@ -23,7 +23,7 @@ public class AppForgotPasswordUiController {
 
   @GetMapping(value = "")
   public String index(ForgotpasswordFormRequest inputForm) {
-    return "/user/forgotpassword/input_userinfo";
+    return "user/forgotpassword/input_userinfo";
   }
 
   /**
@@ -38,11 +38,11 @@ public class AppForgotPasswordUiController {
   public String input(@Validated ForgotpasswordFormRequest inputForm, BindingResult result)
       throws Throwable {
     if (result.hasErrors()) {
-      return "/user/forgotpassword/input_userinfo";
+      return "user/forgotpassword/input_userinfo";
     }
     // TODO: 個別設定 メール送信処理
     // service.sendPasswordUpdateEmail(inputForm);
-    return "/user/forgotpassword/complete_userinfo";
+    return "user/forgotpassword/complete_userinfo";
   }
 
   // @PostMapping(value = "/confirm")
@@ -62,10 +62,10 @@ public class AppForgotPasswordUiController {
   public String inputPassword(@RequestParam(name = "key", required = true) String key,
       ForgotpasswordUpdateFormRequest inputForm) throws Throwable {
     if (service.isAuthKeyExpired(key)) {
-      return "/user/signup/warn_emailauthkeyexpired";
+      return "user/signup/warn_emailauthkeyexpired";
     }
     inputForm.setAuthKey(key);
-    return "/user/forgotpassword/input_updatepassword";
+    return "user/forgotpassword/input_updatepassword";
   }
 
   /**
@@ -79,15 +79,15 @@ public class AppForgotPasswordUiController {
   public String cancelPassword(@RequestParam(name = "key", required = true) String key)
       throws Throwable {
     if (service.isAuthKeyExpired(key)) {
-      return "/user/signup/warn_emailauthkeyexpired";
+      return "user/signup/warn_emailauthkeyexpired";
     }
     service.deleteAuthKey(key);
-    return "/user/forgotpassword/cancel_updatepassword";
+    return "user/forgotpassword/cancel_updatepassword";
   }
 
   /**
    * updatePassword.
-   * 
+   *
    * @param inputForm ForgotpasswordUpdateFormRequest
    * @param result BindingResult
    * @return HTML Path String
@@ -97,9 +97,9 @@ public class AppForgotPasswordUiController {
   public String updatePassword(@Validated ForgotpasswordUpdateFormRequest inputForm,
       BindingResult result) throws Throwable {
     if (result.hasErrors()) {
-      return "/user/forgotpassword/input_updatepassword";
+      return "user/forgotpassword/input_updatepassword";
     }
     service.updatePassword(inputForm);
-    return "/user/forgotpassword/complete_updatepassword";
+    return "user/forgotpassword/complete_updatepassword";
   }
 }

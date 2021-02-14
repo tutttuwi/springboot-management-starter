@@ -70,7 +70,7 @@ public class AppErrorUiController implements ErrorController {
    */
   @GetMapping(WebConst.ERROR_URL_ROOT + "/{code}")
   public String getAnyHandleError(HttpServletRequest request, @PathVariable("code") String code) {
-    return WebConst.ERROR_URL_ROOT + "/" + code;
+    return WebConst.ERROR + "/" + code;
   }
 
   /**
@@ -81,7 +81,7 @@ public class AppErrorUiController implements ErrorController {
    */
   @PostMapping(WebConst.ERROR_URL_ROOT + "/{code}")
   public String postAnyHandleError(HttpServletRequest request, @PathVariable("code") String code) {
-    return WebConst.ERROR_URL_ROOT + "/" + code;
+    return WebConst.ERROR + "/" + code;
   }
 
   /**
