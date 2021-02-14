@@ -1,9 +1,9 @@
 package me.tutttuwi.springboot.management.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -99,8 +99,10 @@ public class AccountUserDetailsService implements UserDetailsService {
   @Transactional
   public SidebarModel getMenuInfo() throws Throwable {
 
-    LineNumberReader br = new LineNumberReader(Files.newBufferedReader(
-        Paths.get("src/main/resources/json/sidebar-menu.json"), Charset.forName("UTF-8")));
+    // LineNumberReader br = new LineNumberReader(Files.newBufferedReader(
+    // Paths.get("src/main/resources/json/sidebar-menu.json"), Charset.forName("UTF-8")));
+    LineNumberReader br = new LineNumberReader(new BufferedReader(new InputStreamReader(
+        getClass().getResourceAsStream("/json/sidebar-menu.json"), Charset.forName("UTF-8"))));
     JsonReader jsr = new JsonReader(br);
     // List<String> list = Files.readAllLines(Path.of("json/sidebar-menu.json"));
     // StringJoiner sj = new StringJoiner("");
