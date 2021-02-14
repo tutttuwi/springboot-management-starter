@@ -8,7 +8,8 @@ spring:
 #    schema: dev
 #    driverClassName: org.postgresql.Driver
   datasource:
-    url: jdbc:h2:mem:demodb;MODE=PostgreSQL;INIT=RUNSCRIPT FROM 'src/main/resources/schema-h2.sql'\;SET SCHEMA dev
+    #url: jdbc:h2:mem:demodb;MODE=PostgreSQL;INIT=RUNSCRIPT FROM 'src/main/resources/schema-h2.sql'\;SET SCHEMA dev
+    url: jdbc:h2:mem:demodb;MODE=PostgreSQL
     username: sa
     password: dm
     driver-class-name: org.h2.Driver
